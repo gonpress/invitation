@@ -127,8 +127,15 @@
         }
 
         @keyframes floatEnvelope {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .envelope:hover {
@@ -197,8 +204,15 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         /* ============================================
@@ -841,7 +855,7 @@
         </div>
     </div>
 
-<!-- 4. 갤러리 페이지 -->
+    <!-- 4. 갤러리 페이지 -->
     <div class="page" id="galleryPage">
         <div class="gallery-title eng">Our Gallery</div>
         <div class="gallery-display" id="galleryDisplay">
@@ -1136,10 +1150,10 @@
         function selectGalleryImage(index) {
             currentGalleryIndex = index;
             const currentImage = galleryImages[index];
-            
+
             document.getElementById('currentGalleryImage').src = currentImage;
             document.getElementById('currentImageNum').textContent = index + 1;
-            
+
             const thumbnails = document.querySelectorAll('.gallery-thumbnail');
             thumbnails.forEach((thumb, i) => {
                 if (i === index) {
@@ -1238,7 +1252,7 @@
                 galleryDisplay.addEventListener('touchend', (e) => {
                     const galleryTouchEndX = e.changedTouches[0].clientX;
                     const diff = galleryTouchStartX - galleryTouchEndX;
-                    
+
                     if (Math.abs(diff) > 50) {
                         if (diff > 0) {
                             nextGalleryImage();
