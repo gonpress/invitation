@@ -210,11 +210,12 @@
     <div id="mainContent" class="opacity-0 invisible transition-all duration-1000 ease-in-out">
 
         <!-- Page 1: SAVE THE DATE -->
-        <section class="bg-black py-4 flex flex-col items-center">
-            <div class="relative w-full aspect-[4/5] sm:aspect-auto sm:h-[600px] overflow-hidden">
-                <img src="/images2/page1.webp" class="w-full h-full object-cover mt-12" alt="wedding photo">
+        <section class="bg-black flex flex-col items-center">
+            <div class="relative w-full overflow-hidden pt-20"
+                style="height: 80vh; min-height: 600px; max-height: 800px;">
+                <img src="/images2/page1.webp" class="w-full h-full object-cover object-bottom" alt="wedding photo">
 
-                <div class="absolute top-[5%] left-1/2 -translate-x-1/2 flex items-center gap-2">
+                <div class="absolute top-[8%] left-1/2 -translate-x-1/2 flex items-center gap-2">
                     <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text">SAVE</h2>
                     <h2 class="font-vibes text-[7vw] sm:text-3xl text-purple-text">The</h2>
                     <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text">DATE</h2>
@@ -238,30 +239,29 @@
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="flex flex-col items-center mt-6 mb-6">
-                <div
-                    class="font-soukou border border-purple-primary rounded-full px-4 py-0 inline-block text-purple-text">
-                    Wedding</div>
-
-                <div
-                    class="flex flex-col items-center font-unipeople text-[15px] text-white leading-[1.9] mt-8 px-5 tracking-tighter">
-                    <div>2026.04.19 일요일 오후 1:20</div>
-                    <div>웨딩그룹위더스 영등포 9층 아모르홀</div>
-                    <div>서울특별시 영등포구 영중로 55 (영등포동6가 7번지)</div>
-                </div>
+        <!-- Page 1-2: 웨딩 정보 -->
+        <section class="bg-black py-8 flex flex-col items-center">
+            <div class="font-soukou border border-purple-primary rounded-full px-4 py-0 inline-block text-purple-text">
+                Wedding</div>
+            <div
+                class="flex flex-col items-center font-unipeople text-[15px] text-white leading-[1.9] mt-8 px-5 tracking-tighter">
+                <div>2026.04.19 일요일 오후 1:20</div>
+                <div>웨딩그룹위더스 영등포 9층 아모르홀</div>
+                <div>서울특별시 영등포구 영중로 55 (영등포동6가 7번지)</div>
             </div>
         </section>
 
         <!-- Page 2: 신랑신부 소개 -->
-        <section class="bg-black py-4">
+        <section class="bg-black">
             <img src="/images2/page2.webp" alt="신랑신부" class="w-full h-auto object-contain"
                 onerror="this.style.display='none'">
         </section>
 
         <!-- Page 3: 인사말 (편지지) -->
-        <section class="flex flex-col bg-purple-primary px-6 py-4">
-            <div class="flex flex-col justify-between bg-white p-5 shadow-xl max-w-md mx-auto w-full min-h-[75vh]">
+        <section class="flex flex-col bg-purple-primary pt-4 px-4">
+            <div class="flex flex-col bg-white px-5 shadow-xl max-w-md mx-auto w-full min-h-[75vh]">
                 <div
                     class="font-mirae text-[20px] text-gray-700 leading-[1.8] text-center whitespace-pre-line tracking-wider">
                     참 이상하게도
@@ -272,11 +272,10 @@
                     내게는 허기지기만 했던 유년기가
                     그 허름하기만 한 유년기가
                     그들이 얼마나 치열하게 만든 요새였는지.
-                    <div class="mt-6 text-gray-500 italic">- 폭삭 속았수다 중 -</div>
+                    <div class="mt-6 text-gray-500 italic">- 폭싹 속았수다 중 -</div>
                 </div>
 
-                <div class="flex flex-col items-center font-mirae mt-6 gap-3">
-
+                <div class="flex flex-col items-center font-mirae">
                     <div class="transform -rotate-1">
                         <span
                             class="text-lg  px-1 bg-[linear-gradient(transparent_50%,theme('colors.purple-light2')_50%)]">
@@ -300,28 +299,22 @@
                 </div>
             </div>
 
-            <div class="mt-2">
+            <div class="mt-2 mb-2">
                 <div class="font-unipeople text-white opacity-80 text-sm">We're</div>
                 <div class="font-unipeople text-white tracking-wider text-sm">getting married</div>
             </div>
         </section>
 
-        <!-- Page 4: 신랑이 신부에게 -->
-        <section class="bg-black py-4">
-            <img src="/images2/page4.webp" alt="신랑이 신부에게" class="w-full h-auto object-contain"
+        <!-- Page 4: 신랑 신부 손편지 -->
+        <section class="bg-black">
+            <img src="/images2/page4.webp" alt="신랑 신부 손편지" class="w-full h-auto object-contain"
                 onerror="this.style.display='none'">
         </section>
 
-        <!-- Page 5: 신부가 신랑에게 -->
-        <section class="bg-black py-4">
-            <img src="/images2/page5.webp" alt="신부가 신랑에게" class="w-full h-auto object-contain"
-                onerror="this.style.display='none'">
-        </section>
-
-        <!-- Page 6: 갤러리 -->
-        <section class="flex flex-col items-center justify-center bg-black py-4">
-            <h2 class="font-soukou text-2xl font-medium text-white mb-6 tracking-wide">Gallery</h2>
-            <div id="galleryGrid" class="grid grid-cols-3 gap-0 max-w-2xl mx-auto">
+        <!-- Page 4: 갤러리 -->
+        <section class="flex flex-col items-center justify-center bg-[#ffffff] py-12">
+            <h2 class="font-soukou text-2xl font-medium text-black mb-12 tracking-wide">Gallery</h2>
+            <div id="galleryGrid" class="grid grid-cols-3 gap-1 max-w-2xl mx-auto mb-6 px-4">
                 <!-- JavaScript로 생성 -->
             </div>
         </section>
@@ -355,109 +348,46 @@
         </div>
 
         <!-- Page 7: 달력 -->
-        <section class="flex flex-col items-center justify-center bg-[#1a1a1a] px-5 py-4">
-            <h2 class="font-soukou text-base italic text-purple-light tracking-[2px] mb-4">Save The Date</h2>
-
-            <!-- D-day 메시지 -->
-            <div id="calendarDday" class="font-unipeople text-2xl text-white mb-6">
-                <!-- JavaScript로 동적 생성 -->
-            </div>
-
-            <div class="w-full max-w-sm mx-auto text-center px-4">
-                <div class="grid grid-cols-7 gap-5 mb-6">
-                    <!-- 요일 -->
-                    <div class="font-unipeople text-sm text-purple-primary py-3 font-semibold">일</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">월</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">화</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">수</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">목</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">금</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-3 font-semibold">토</div>
-
-                    <!-- 날짜 -->
-                    <div class="invisible"></div>
-                    <div class="invisible"></div>
-                    <div class="invisible"></div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">1</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">2</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">3</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">4</div>
-
-                    <div class="font-unipeople text-sm text-gray-400 py-2">5</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">6</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">7</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">8</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">9</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">10</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">11</div>
-
-                    <div class="font-unipeople text-sm text-gray-400 py-2">12</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">13</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">14</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">15</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">16</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">17</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">18</div>
-
-                    <div
-                        class="font-unipeople text-sm font-bold bg-purple-primary text-black rounded-full py-2 transform scale-110">
-                        19</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">20</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">21</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">22</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">23</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">24</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">25</div>
-
-                    <div class="font-unipeople text-sm text-gray-400 py-2">26</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">27</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">28</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">29</div>
-                    <div class="font-unipeople text-sm text-gray-400 py-2">30</div>
-                </div>
-
-                <div class="p-6 border border-purple-light rounded-lg mb-4 text-white">
-                    <span class="font-unipeople">2026년 4월 19일 일요일 오후 1시 20분</span>
-                </div>
-            </div>
+        <section class="flex flex-col items-center justify-center bg-[#9a819b] px-2 pt-12 pb-2">
+            <img src="/images2/calendar.webp" alt="calendar" class="w-full h-auto object-contain"
+                onerror="this.style.display='none'">
         </section>
 
-        <!-- Page 8: 오시는 길 -->
-        <section class="flex flex-col items-center justify-center bg-[#151515] px-5 py-4">
-            <h2 class="font-soukou text-base italic text-purple-light tracking-[2px] mb-6">Location</h2>
+        <!-- Page 8: Location -->
+        <section class="flex flex-col items-center justify-center bg-[#202123] px-5 py-10">
+            <div class="font-soukou border border-purple-primary rounded-full px-4 py-0 inline-block text-purple-text">
+                Location</div>
+            <!-- <h2 class="font-soukou text-base italic text-purple-light tracking-[2px] mb-6">Location</h2> -->
 
             <!-- 네이버 지도 -->
-            <div id="map" class="w-full max-w-md mx-auto rounded-2xl overflow-hidden mb-4" style="height: 300px;"></div>
+            <div id="map" class="w-full max-w-md mx-auto rounded-2xl overflow-hidden mt-10 mb-6 h-80"></div>
 
             <div class="text-center mb-4 max-w-md mx-auto">
                 <div class="font-unipeople text-lg font-bold text-white mb-3">웨딩그룹위더스 영등포 9층 아모르홀</div>
                 <div class="font-unipeople text-sm text-gray-400 leading-relaxed">
                     서울특별시 영등포구 영중로 55
                 </div>
-                <button class="px-4 py-1 mt-2 text-xs rounded-full border border-gray-600 text-purple-light"
-                    onClick="copyAddress('서울특별시 영등포구 영중로 55')">주소
-                    복사하기</button>
             </div>
 
             <div class="flex gap-3 mb-6 max-w-md mx-auto w-full px-2">
                 <a href="https://place.map.kakao.com/24250591" target="_blank"
-                    class="flex-1 px-6 py-3 text-sm font-medium bg-[#FEE500] text-[#333333] rounded-lg text-center hover:bg-[#444444] transition-all duration-300">
-                    카카오맵
+                    class="font-unipeople flex-1 py-3 text-sm font-medium border border-purple-primary text-purple-light rounded-lg text-center">
+                    <img src="/images2/kakao-ico.png" alt="Kakao Map" class="inline-block w-4 h-4 mr-2">카카오맵
                 </a>
                 <a href="https://naver.me/5chuCtRo" target="_blank"
-                    class="flex-1 px-6 py-3 text-sm font-medium bg-[#03C75A] text-white rounded-lg text-center hover:bg-[#444444] transition-all duration-300">
-                    네이버 지도
+                    class="font-unipeople flex-1 py-3 text-sm font-medium border border-purple-primary text-purple-light rounded-lg text-center">
+                    <img src="/images2/naver-ico.png" alt="Naver Map" class="inline-block w-4 h-4 mr-2">네이버 지도
                 </a>
             </div>
 
-            <div class="bg-[#2a2a2a] bg-opacity-30 rounded-xl border border-purple-primary max-w-sm mx-auto w-full p-5">
-                <h4 class="font-unipeople text-sm text-purple-light mb-3 font-semibold">🚊 지하철</h4>
-                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed mb-3">
+            <div class="rounded-lg border border-purple-primary max-w-md mx-auto w-full p-5">
+                <h4 class="font-unipeople text-sm text-purple-light mb-1 font-semibold">🚊 지하철</h4>
+                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed mb-6">
                     5호선 영등포시장역 4번 출구 도보 1분<br>
-                    1호선 5번 출구 도보 10분
+                    1호선 영등포역 5번 출구 도보 10분
                 </p>
-                <h4 class="font-unipeople text-sm text-purple-light mb-3 font-semibold">🚌 버스</h4>
-                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed mb-3">
+                <h4 class="font-unipeople text-sm text-purple-light mb-1 font-semibold">🚌 버스</h4>
+                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed mb-6">
                     영등포시장 하차
                     간선버스 605, 661, 761번 <br>
                     지선버스 5616, 5714, 6514번 <br>
@@ -467,8 +397,8 @@
                     일반버스 5, 60, 60-3, 88번 <br>
                     공항버스 6007번 <br>
                 </p>
-                <h4 class="font-unipeople text-sm text-purple-light mb-3 font-semibold">🚗 주차</h4>
-                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed mb-3">
+                <h4 class="font-unipeople text-sm text-purple-light mb-1 font-semibold">🚗 주차</h4>
+                <p class="font-unipeople text-[13px] text-gray-400 leading-relaxed">
                     건물 주차장 <br>
                     영남 주차장(상황에 따라 운영)
                 </p>
@@ -476,21 +406,34 @@
         </section>
 
         <!-- Page 9: 계좌번호 -->
-        <section class="flex flex-col items-center justify-center bg-[#0d0d0d] px-10 py-4">
-            <h2 class="font-soukou text-base italic text-purple-light tracking-[2px] mb-8">마음 전하실 곳</h2>
+        <section class="flex flex-col items-center justify-center bg-white px-5 pt-10">
+            <div
+                class="font-unipeople border border-purple-primary rounded-full px-4 py-0 inline-block text-purple-text">
+                마음 전하실 곳</div>
 
-            <div class="flex flex-col gap-6 max-w-md mx-auto w-full">
+            <div class="flex flex-col max-w-md mx-auto w-full mt-8">
+                <div class="font-unipeople text-sm pb-2 border-purple-light">🤵🏻‍♂️
+                    축하 화환 안내
+                </div>
+                <div
+                    class="border border-purple-primary rounded-lg py-4 px-6 max-w-md mx-auto w-full flex flex-col gap-2 text-center font-unipeople text-sm text-gray-700 leading-relaxed">
+                    <div>화환은 정중히 사양합니다.</div>
+                    <div>마음만 감사히 받겠습니다.</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6 max-w-md mx-auto w-full mt-8">
                 <!-- 신랑측 -->
                 <div class="account-group">
-                    <div class="font-unipeople text-sm text-purple-light mb-4 pb-2 border-b border-purple-light">🤵🏻‍♂️
+                    <div class="font-unipeople text-sm mb-4 pb-2 border-purple-light">🤵🏻‍♂️
                         신랑측 계좌번호
                     </div>
 
                     <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
                         <div class="flex-1">
                             <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">620-191216-127</div>
-                            <div class="font-unipeople text-xs text-gray-500">신랑 정보경</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">620-191216-127</div>
+                            <div class="font-unipeople text-xs text-gray-500">정보경</div>
                         </div>
                         <button onclick="copyAccount('620-191216-127', '정보경')"
                             class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
@@ -501,7 +444,7 @@
                     <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
                         <div class="flex-1">
                             <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">111-111</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
                             <div class="font-unipeople text-xs text-gray-500">아버지 정한국</div>
                         </div>
                         <button onclick="copyAccount('111-111', '정한국')"
@@ -513,7 +456,7 @@
                     <div class="flex justify-between items-center py-5 gap-4">
                         <div class="flex-1">
                             <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">111-111</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
                             <div class="font-unipeople text-xs text-gray-500">어머니 최맹자</div>
                         </div>
                         <button onclick="copyAccount('111-111', '최맹자')"
@@ -525,17 +468,17 @@
 
                 <!-- 신부측 -->
                 <div class="account-group">
-                    <div class="font-unipeople text-sm text-purple-light mb-4 pb-2 border-b border-purple-light">👰🏻‍♀️
+                    <div class="font-unipeople text-sm mb-4 pb-2 border-b border-purple-light">👰🏻‍♀️
                         신부측 계좌번호
                     </div>
 
                     <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
                         <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">123-123-123</div>
+                            <div class="font-unipeople text-xs text-gray-500 mb-1">토스뱅크</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">1000-0809-4039</div>
                             <div class="font-unipeople text-xs text-gray-500">신부 조효지</div>
                         </div>
-                        <button onclick="copyAccount('123-123-123', '조효지')"
+                        <button onclick="copyAccount('1000-0809-4039', '조효지')"
                             class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
                             복사
                         </button>
@@ -544,7 +487,7 @@
                     <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
                         <div class="flex-1">
                             <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">111-111</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
                             <div class="font-unipeople text-xs text-gray-500">아버지 조대현</div>
                         </div>
                         <button onclick="copyAccount('111-111', '조대현')"
@@ -556,7 +499,7 @@
                     <div class="flex justify-between items-center py-5 gap-4">
                         <div class="flex-1">
                             <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
-                            <div class="font-unipeople text-sm font-bold text-white mb-1">111-111</div>
+                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
                             <div class="font-unipeople text-xs text-gray-500">어머니 정란아</div>
                         </div>
                         <button onclick="copyAccount('111-111', '정란아')"
@@ -635,28 +578,10 @@
             if (diff > 0) {
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 document.getElementById('ddayCount').textContent = `D-${days}`;
-
-                // 달력 페이지 D-day 메시지 업데이트
-                const calendarDday = document.getElementById('calendarDday');
-                if (calendarDday) {
-                    calendarDday.textContent = `D-${days}`;
-                }
             } else if (diff > -86400000) {
                 document.getElementById('ddayCount').textContent = 'D-DAY';
-
-                // 달력 페이지 D-day 메시지 업데이트
-                const calendarDday = document.getElementById('calendarDday');
-                if (calendarDday) {
-                    calendarDday.textContent = 'D-DAY';
-                }
             } else {
                 document.getElementById('ddayCount').textContent = 'Thank You';
-
-                // 달력 페이지 D-day 메시지 업데이트
-                const calendarDday = document.getElementById('calendarDday');
-                if (calendarDday) {
-                    calendarDday.textContent = '결혼을 축하해주셔서 감사합니다.';
-                }
             }
         }
 
@@ -720,13 +645,13 @@
             // 썸네일은 12장만 표시 (전체 14장은 모달에서 접근 가능)
             for (let i = 1; i <= thumbnailCount; i++) {
                 const item = document.createElement('div');
-                item.className = 'aspect-square overflow-hidden cursor-pointer transition-all duration-300 bg-purple-lighter';
+                item.className = 'aspect-square overflow-hidden cursor-pointer bg-purple-lighter rounded-lg';
 
                 const img = document.createElement('img');
                 img.src = `/gallery/${i}.jpg`;
                 img.alt = `Wedding Photo ${i}`;
                 img.loading = 'lazy';
-                img.className = 'w-full h-full object-cover transition-all duration-300 hover:grayscale';
+                img.className = 'w-full h-full object-cover rounded-lg';
 
                 img.onerror = function () {
                     this.alt = '이미지 준비중';
@@ -867,21 +792,6 @@
                     });
             } else {
                 fallbackCopy(accountNumber, name);
-            }
-        }
-
-        // 주소복사
-        function copyAddress(address) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(address)
-                    .then(() => {
-                        alert(`주소가 복사되었습니다.\n${address}`);
-                    })
-                    .catch(err => {
-                        fallbackCopy(address, '주소');
-                    });
-            } else {
-                fallbackCopy(address, '주소');
             }
         }
 
