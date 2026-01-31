@@ -406,113 +406,143 @@
         </section>
 
         <!-- Page 9: 계좌번호 -->
-        <section class="flex flex-col items-center justify-center bg-white px-5 pt-10">
-            <div
-                class="font-unipeople border border-purple-primary rounded-full px-4 py-0 inline-block text-purple-text">
-                마음 전하실 곳</div>
-
-            <div class="flex flex-col max-w-md mx-auto w-full mt-8">
-                <div class="font-unipeople text-sm pb-2 border-purple-light">🤵🏻‍♂️
-                    축하 화환 안내
-                </div>
-                <div
-                    class="border border-purple-primary rounded-lg py-4 px-6 max-w-md mx-auto w-full flex flex-col gap-2 text-center font-unipeople text-sm text-gray-700 leading-relaxed">
-                    <div>화환은 정중히 사양합니다.</div>
-                    <div>마음만 감사히 받겠습니다.</div>
+        <section class="flex flex-col items-center justify-center bg-white px-5 pt-6">
+            <!-- 탭 네비게이션 -->
+            <div class="flex justify-center mx-auto w-full mt-8 mb-6">
+                <div class="flex rounded-lg border border-purple-primary overflow-hidden">
+                    <button onclick="switchTab('groom')"
+                        class="tab-btn px-4 py-2 text-sm font-unipeople transition-all duration-300 bg-purple-primary text-white"
+                        id="tab-groom">
+                        신랑측
+                    </button>
+                    <button onclick="switchTab('bride')"
+                        class="tab-btn px-4 py-2 text-sm font-unipeople transition-all duration-300 bg-white text-purple-primary"
+                        id="tab-bride">
+                        신부측
+                    </button>
+                    <button onclick="switchTab('flower')"
+                        class="tab-btn px-4 py-2 text-sm font-unipeople transition-all duration-300 bg-white text-purple-primary"
+                        id="tab-flower">
+                        화환안내
+                    </button>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-6 max-w-md mx-auto w-full mt-8">
-                <!-- 신랑측 -->
-                <div class="account-group">
-                    <div class="font-unipeople text-sm mb-4 pb-2 border-purple-light">🤵🏻‍♂️
-                        신랑측 계좌번호
-                    </div>
+            <!-- 탭 콘텐츠 -->
+            <div class="max-w-md mx-auto w-full">
+                <!-- 신랑측 탭 콘텐츠 -->
+                <div id="content-groom" class="tab-content">
+                    <div class="flex flex-col gap-6">
+                        <div class="account-group">
+                            <div
+                                class="font-unipeople text-sm text-purple-light mb-4 pb-2 border-b border-purple-light">
+                                계좌번호
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">620-191216-127</div>
-                            <div class="font-unipeople text-xs text-gray-500">정보경</div>
-                        </div>
-                        <button onclick="copyAccount('620-191216-127', '정보경')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
-                    </div>
+                            <div class="flex justify-between items-center py-5 border-b border-gray-200 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">620-191216-127
+                                    </div>
+                                    <div class="font-unipeople text-xs text-gray-500">신랑 정보경</div>
+                                </div>
+                                <button onclick="copyAccount('620-191216-127', '정보경')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
-                            <div class="font-unipeople text-xs text-gray-500">아버지 정한국</div>
-                        </div>
-                        <button onclick="copyAccount('111-111', '정한국')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
-                    </div>
+                            <div class="flex justify-between items-center py-5 border-b border-gray-200 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">111-111</div>
+                                    <div class="font-unipeople text-xs text-gray-500">아버지 정한국</div>
+                                </div>
+                                <button onclick="copyAccount('111-111', '정한국')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
-                            <div class="font-unipeople text-xs text-gray-500">어머니 최맹자</div>
+                            <div class="flex justify-between items-center py-5 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">하나은행</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">111-111</div>
+                                    <div class="font-unipeople text-xs text-gray-500">어머니 최맹자</div>
+                                </div>
+                                <button onclick="copyAccount('111-111', '최맹자')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
                         </div>
-                        <button onclick="copyAccount('111-111', '최맹자')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
                     </div>
                 </div>
 
-                <!-- 신부측 -->
-                <div class="account-group">
-                    <div class="font-unipeople text-sm mb-4 pb-2 border-b border-purple-light">👰🏻‍♀️
-                        신부측 계좌번호
-                    </div>
+                <!-- 신부측 탭 콘텐츠 -->
+                <div id="content-bride" class="tab-content hidden">
+                    <div class="flex flex-col gap-6">
+                        <div class="account-group">
+                            <div
+                                class="font-unipeople text-sm text-purple-light mb-4 pb-2 border-b border-purple-light">
+                                계좌번호
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">토스뱅크</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">1000-0809-4039</div>
-                            <div class="font-unipeople text-xs text-gray-500">신부 조효지</div>
-                        </div>
-                        <button onclick="copyAccount('1000-0809-4039', '조효지')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
-                    </div>
+                            <div class="flex justify-between items-center py-5 border-b border-gray-200 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">토스뱅크</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">1000-0809-4039
+                                    </div>
+                                    <div class="font-unipeople text-xs text-gray-500">신부 조효지</div>
+                                </div>
+                                <button onclick="copyAccount('1000-0809-4039', '조효지')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 border-b border-white border-opacity-10 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
-                            <div class="font-unipeople text-xs text-gray-500">아버지 조대현</div>
-                        </div>
-                        <button onclick="copyAccount('111-111', '조대현')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
-                    </div>
+                            <div class="flex justify-between items-center py-5 border-b border-gray-200 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">111-111</div>
+                                    <div class="font-unipeople text-xs text-gray-500">아버지 조대현</div>
+                                </div>
+                                <button onclick="copyAccount('111-111', '조대현')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
 
-                    <div class="flex justify-between items-center py-5 gap-4">
-                        <div class="flex-1">
-                            <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
-                            <div class="font-unipeople text-sm font-bold mb-1">111-111</div>
-                            <div class="font-unipeople text-xs text-gray-500">어머니 정란아</div>
+                            <div class="flex justify-between items-center py-5 gap-4">
+                                <div class="flex-1">
+                                    <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
+                                    <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">111-111</div>
+                                    <div class="font-unipeople text-xs text-gray-500">어머니 정란아</div>
+                                </div>
+                                <button onclick="copyAccount('111-111', '정란아')"
+                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                    복사
+                                </button>
+                            </div>
                         </div>
-                        <button onclick="copyAccount('111-111', '정란아')"
-                            class="px-5 py-2.5 text-xs font-medium bg-[#333333] text-white border border-gray-600 rounded-full hover:bg-purple-light hover:border-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                            복사
-                        </button>
+                    </div>
+                </div>
+
+                <!-- 화환안내 탭 콘텐츠 -->
+                <div id="content-flower" class="tab-content hidden">
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="py-6 px-6 w-full flex flex-col gap-2 text-center font-unipeople text-sm text-gray-700 leading-relaxed">
+                            <div>화환은 정중히 사양합니다.</div>
+                            <div>마음만 감사히 받겠습니다.</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 푸터 -->
-        <section class="bg-white px-5 py-4 text-center text-gray-500 text-sm">
+        <section class="bg-white mt-6 px-5 py-4 text-center text-gray-500 text-sm">
             Thank you<span class="text-purple-primary mx-1">💜</span><br>
             정보경 & 조효지
         </section>
@@ -792,6 +822,44 @@
                     });
             } else {
                 fallbackCopy(accountNumber, name);
+            }
+        }
+
+        // 탭 전환 기능
+        function switchTab(tabName) {
+            // 모든 탭 버튼의 active 상태 제거
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-primary', 'text-white');
+                btn.classList.add('bg-white', 'text-purple-primary');
+            });
+
+            // 모든 탭 콘텐츠 숨기기
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // 선택된 탭 버튼 활성화
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('bg-white', 'text-purple-primary');
+            activeTab.classList.add('bg-purple-primary', 'text-white');
+
+            // 선택된 탭 콘텐츠 표시
+            const activeContent = document.getElementById(`content-${tabName}`);
+            activeContent.classList.remove('hidden');
+        }
+
+        //주소복사
+        function copyAddress(address) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(address)
+                    .then(() => {
+                        alert(`주소가 복사되었습니다.\n${address}`);
+                    })
+                    .catch(err => {
+                        fallbackCopy(address, '주소');
+                    });
+            } else {
+                fallbackCopy(address, '주소');
             }
         }
 
