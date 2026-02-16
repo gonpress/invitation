@@ -155,8 +155,10 @@
         <div class="loading-text">Loading...</div>
     </div>
 
-    <!-- Background Music (Web Audio API handled in JS) -->
-    <!-- <audio> tag removed to prevent lock screen controls -->
+    <!-- Background Music (HTML5 Audio) -->
+    <audio id="bgm" loop preload="auto">
+        <source src="/audio/bgm.mp3" type="audio/mp3">
+    </audio>
 
     <!-- Music Control Button -->
     <div id="musicControl" onclick="toggleMusic()">
@@ -534,10 +536,8 @@
             const allImages = [...criticalImages, ...galleryThumbnails];
 
             try {
-                await Promise.all([
-                    ...allImages.map(src => preloadImage(src)),
-                    initAudio() // Preload BGM
-                ]);
+                // Preload images only (HTML5 Audio loads automatically)
+                await Promise.all(allImages.map(src => preloadImage(src)));
             } catch (e) {
                 console.error('Preload error:', e);
             }
@@ -550,9 +550,7 @@
                 document.body.classList.add('overflow-x-hidden');
 
                 // Attempt to auto-play music after loading completes
-                if (isAudioInitialized) {
-                    playMusic();
-                }
+                playMusic();
             }, 500);
         }
 
@@ -571,58 +569,26 @@
             }
         }, { passive: false });
 
-        // --- Background Music Logic (Web Audio API) ---
-        // Using Web Audio API to prevent OS lock screen media controls
+        // --- Background Music Logic (HTML5 Audio) ---
+        const bgm = document.getElementById('bgm');
         const musicBtn = document.getElementById('musicControl');
-        let audioContext;
-        let audioBuffer;
-        let sourceNode;
-        let isAudioInitialized = false;
+        let isPlaying = false;
 
-        async function initAudio() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                audioContext = new AudioContext();
-
-                const response = await fetch('/audio/bgm.mp3');
-                const arrayBuffer = await response.arrayBuffer();
-                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-                isAudioInitialized = true;
-            } catch (e) {
-                console.error('BGM Init Failed:', e);
-            }
-        }
-
-        async function playMusic() {
-            if (!isAudioInitialized || !audioContext || !audioBuffer) return;
-
-            // If context is suspended, resume it and WAIT for it (critical for iOS)
-            if (audioContext.state === 'suspended') {
-                await audioContext.resume();
-            }
-
-            // Create valid source node if not exists or if stopped
-            if (!sourceNode) {
-                sourceNode = audioContext.createBufferSource();
-                sourceNode.buffer = audioBuffer;
-                sourceNode.loop = true;
-                sourceNode.connect(audioContext.destination);
-                sourceNode.start(0);
-
-                // When audio ends (shouldn't happen with loop, but for safety)
-                sourceNode.onended = () => {
-                    sourceNode = null;
-                    updateBtnState(false);
-                };
-            }
-            updateBtnState(true);
+        function playMusic() {
+            if (!bgm) return;
+            bgm.play().then(() => {
+                isPlaying = true;
+                updateBtnState(true);
+            }).catch(e => {
+                console.log('Playback failed:', e);
+            });
         }
 
         function pauseMusic() {
-            if (audioContext && audioContext.state === 'running') {
-                audioContext.suspend().then(() => {
-                    updateBtnState(false);
-                });
+            if (bgm) {
+                bgm.pause();
+                isPlaying = false;
+                updateBtnState(false);
             }
         }
 
@@ -637,9 +603,7 @@
         }
 
         function toggleMusic() {
-            if (!isAudioInitialized) return;
-
-            if (audioContext.state === 'running') {
+            if (isPlaying) {
                 pauseMusic();
             } else {
                 playMusic();
@@ -647,21 +611,21 @@
         }
 
         // Auto-play attempt on first interaction
-        async function attemptAutoPlay() {
-            if (!isAudioInitialized) {
-                await initAudio();
-            }
-            playMusic();
-
-            // Remove listeners after first successful interaction
-            if (audioContext && audioContext.state === 'running') {
+        function attemptAutoPlay() {
+            if (!isPlaying) {
+                playMusic();
+                // Remove listeners after first attempt
                 document.removeEventListener('click', attemptAutoPlay);
                 document.removeEventListener('touchstart', attemptAutoPlay);
+                document.removeEventListener('scroll', attemptAutoPlay);
             }
         }
 
         // Initialize loading on load
-        window.addEventListener('load', initAudio);
+        window.addEventListener('load', () => {
+            // No specific initAudio needed for HTML5 Audio, just ensure the element exists
+            // and then attach auto-play listeners.
+        });
 
         // Listeners for auto-play (including scroll for iOS)
         document.addEventListener('click', attemptAutoPlay);
