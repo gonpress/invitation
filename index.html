@@ -574,7 +574,9 @@
         });
 
         window.addEventListener('touchmove', function (e) {
-            if (isAtTop && e.touches[0].pageY > window.startY) {
+            // Only prevent pull-to-refresh, not general scrolling
+            // Ensure e.cancelable is true before preventing
+            if (isAtTop && e.touches[0].pageY > window.startY && e.cancelable) {
                 e.preventDefault();
             }
         }, { passive: false });
@@ -582,8 +584,11 @@
         // --- Strict Zoom Prevention (Robust Version) ---
 
         // 1. Prevent Pinch Zoom
+        // 1. Prevent Pinch Zoom (Updated for cross-browser safety)
         document.addEventListener('touchmove', function (event) {
-            if (event.scale !== 1) {
+            // Only block if more than one finger is used (pinch)
+            // AND ensure it's not a single finger scroll
+            if (event.touches.length > 1) {
                 event.preventDefault();
             }
         }, { passive: false });
