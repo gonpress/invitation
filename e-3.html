@@ -163,43 +163,53 @@
 
     <!-- 첫 화면: 메인 인비테이션 (봉투 역할) -->
     <div id="coverPage"
-        class="fixed inset-0 bg-purple-primary z-50 cursor-pointer overflow-hidden transition-all duration-1000 ease-in-out">
-        <div id="envelopeBody"
-            class="w-full h-full max-w-md mx-auto flex flex-col items-center px-6 relative envelope-flap-line">
-            <div class="flex flex-col items-center pt-[15vh]">
-                <div>
-                    <h1 class="font-soukou text-[7vw] sm:text-[28px] text-white tracking-wider relative leading-tight">
-                        WE INVITE YOU
-                    </h1>
-                </div>
-                <div>
-                    <h1 class="font-soukou text-[7vw] sm:text-[28px] text-white tracking-wider relative leading-tight">
-                        TO OUR WEDDING
-                    </h1>
-                </div>
+        class="fixed inset-0 bg-[#e8e0e8] z-50 cursor-pointer overflow-hidden transition-all duration-2000 ease-in-out font-vibes">
+        <div id="introSequence"
+            class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
 
-                <div class="envelope-seal animate-pulse z-20">
-                    <img src="/images2/seal.png" alt="wedding seal" class="w-full h-full object-contain">
+            <!-- Soft Gradient Background -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#f3e7f3] to-[#dcd0dd]"></div>
+
+            <!-- Floating Particles (Simple CSS) -->
+            <div id="particles" class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="particle absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full opacity-0 animate-ping">
+                </div>
+                <div
+                    class="particle absolute top-3/4 left-3/4 w-1 h-1 bg-white rounded-full opacity-0 animate-pulse delay-700">
+                </div>
+                <div
+                    class="particle absolute top-1/2 left-1/2 w-3 h-3 bg-white/50 rounded-full opacity-0 animate-bounce delay-1000">
                 </div>
             </div>
 
-            <div class="flex-1"></div>
+            <!-- Double Exposure Container -->
+            <div
+                class="relative w-72 h-72 rounded-full overflow-hidden border-4 border-white/50 shadow-[0_0_30px_rgba(255,255,255,0.8)] z-20">
+                <!-- Photo 1: Base -->
+                <div id="introPhoto1"
+                    class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-3000 ease-in-out scale-110"
+                    style="background-image: url('/intro-gallery/EM608355.jpg');"></div>
 
-            <div class="flex flex-col items-center w-full pb-[8vh] z-10">
-                <div class="mb-10 text-center">
-                    <div class="font-gloock text-sm text-white opacity-80 italic mb-2">From.</div>
-                    <div class="font-unipeople font-medium text-white text-xl tracking-[4px]">
-                        정보경<span class="mx-2 opacity-60 text-sm">&</span>조효지
-                    </div>
+                <!-- Photo 2: Overlay (Screen Blend) -->
+                <div id="introPhoto2"
+                    class="absolute inset-0 bg-cover bg-center opacity-0 mix-blend-screen transition-opacity duration-3000 ease-in-out scale-110 delay-1000"
+                    style="background-image: url('/intro-gallery/EM608480.jpg');"></div>
+
+                <!-- Light Leak Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-orange-300/20 mix-blend-overlay">
                 </div>
+            </div>
 
-                <div class="text-white text-center border-t border-white/20 pt-6 w-[80%]">
-                    <div id="ddayCount" class="font-cormorant text-3xl font-medium tracking-wider mb-2">
-                        D-DAY
-                    </div>
-                    <div class="font-unipeople text-sm tracking-[2px] opacity-90">
-                        2026. 04. 19. SUN 13:20
-                    </div>
+            <!-- Text Content -->
+            <div id="introText" class="mt-12 text-center z-30 opacity-0 transition-opacity duration-2000">
+                <div class="text-4xl text-[#7c6a7d] drop-shadow-sm mb-2">Happily Ever After</div>
+                <div class="font-soukou text-sm text-[#9a8a9b] tracking-widest mt-4">2026. 04. 19</div>
+            </div>
+
+            <!-- Touch Hint -->
+            <div class="absolute bottom-10 p-4 z-40">
+                <div class="text-[#9a8a9b] text-sm animate-pulse tracking-widest font-unipeople opacity-60">
+                    See Our Story
                 </div>
             </div>
 
@@ -549,32 +559,66 @@
     </div>
 
     <script>
-        // 페이지 로드 시 스크롤 잠금 (봉투가 열릴 때까지)
+        // 페이지 로드 시 스크롤 잠금
         document.body.style.overflow = 'hidden';
         document.body.style.height = '100vh';
 
-        // 커버 페이지 클릭 시 봉투 열기 애니메이션 + 메인 콘텐츠 표시
+        // Dreamy Intro Sequence Logic
+        function runIntro() {
+            // 0.5s: Photo 1 fades in with blur reduction
+            setTimeout(() => {
+                const p1 = document.getElementById('introPhoto1');
+                if (p1) {
+                    p1.classList.remove('opacity-0', 'blur-xl', 'scale-110');
+                    p1.classList.add('blur-[1px]', 'scale-100'); // Keep slight blur/dreamy feel
+                }
+            }, 500);
+
+            // 1.5s: Text fades in slow
+            setTimeout(() => {
+                const t = document.getElementById('introText');
+                if (t) t.classList.remove('opacity-0');
+            }, 1500);
+
+            // 4.0s: Cross dissolve to Photo 2
+            setTimeout(() => {
+                const p1 = document.getElementById('introPhoto1');
+                const p2 = document.getElementById('introPhoto2');
+
+                if (p1) p1.classList.add('opacity-0');
+                if (p2) {
+                    p2.classList.remove('opacity-0', 'blur-md', 'scale-105');
+                    p2.classList.add('scale-100');
+                }
+            }, 4500);
+
+            // 6.0s: Hint
+            setTimeout(() => {
+                const h = document.getElementById('touchHint');
+                if (h) h.classList.remove('opacity-0');
+            }, 6000);
+        }
+
+        window.addEventListener('load', runIntro);
+
+        // Click to Enter (Skip)
         document.getElementById('coverPage').addEventListener('click', function () {
             const coverPage = document.getElementById('coverPage');
             const mainContent = document.getElementById('mainContent');
-            const envelopeSeal = document.querySelector('.envelope-seal');
 
-            // 스티커 사라지는 효과
-            envelopeSeal.classList.add('breaking');
+            // "Clearing the mist" - scale up and fade out white
+            coverPage.classList.add('opacity-0', 'scale-110', 'blur-lg');
 
-            // 전체 봉투가 사라지고 메인 콘텐츠 표시 (1초 후)
             setTimeout(() => {
-                coverPage.classList.add('opacity-0', 'invisible');
+                coverPage.style.display = 'none';
                 mainContent.classList.remove('opacity-0', 'invisible');
                 mainContent.classList.add('opacity-100', 'visible');
 
-                // 스크롤 잠금 해제
+                // Unlock scroll
                 document.body.style.overflow = '';
                 document.body.style.height = '';
-
-                // 첫 페이지로 즉시 이동
                 window.scrollTo(0, 0);
-            }, 1000);
+            }, 1500); // Slow dissolve
         });
 
         // 첫 페이지에서 위로 스크롤 방지
@@ -678,7 +722,7 @@
                 item.className = 'aspect-square overflow-hidden cursor-pointer bg-purple-lighter rounded-lg';
 
                 const img = document.createElement('img');
-                img.src = `/gallery/${i}.jpeg`;
+                img.src = `/gallery/${i}.jpg`;
                 img.alt = `Wedding Photo ${i}`;
                 img.loading = 'lazy';
                 img.className = 'w-full h-full object-cover rounded-lg';
@@ -701,7 +745,7 @@
         function preloadHiddenImages() {
             for (let i = thumbnailCount + 1; i <= totalImages; i++) {
                 const img = new Image();
-                img.src = `/gallery/${i}.jpeg`;
+                img.src = `/gallery/${i}.jpg`;
             }
         }
 
@@ -712,7 +756,7 @@
 
         // 이미지 경로 생성 함수
         function getImagePath(index) {
-            return `/gallery/${index}.jpeg`;
+            return `/gallery/${index}.jpg`;
         }
 
         // 갤러리 모달

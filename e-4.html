@@ -40,6 +40,20 @@
                         'unipeople': ['UNIPeopleGothic', 'sans-serif'],
                         'mirae': ['MiraenaMu', 'cursive'],
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                    }
                 }
             }
         }
@@ -161,85 +175,75 @@
 
 <body class="font-sans-kr text-gray-700 overflow-x-hidden">
 
-    <!-- 첫 화면: 메인 인비테이션 (봉투 역할) -->
-    <div id="coverPage"
-        class="fixed inset-0 bg-purple-primary z-50 cursor-pointer overflow-hidden transition-all duration-1000 ease-in-out">
-        <div id="envelopeBody"
-            class="w-full h-full max-w-md mx-auto flex flex-col items-center px-6 relative envelope-flap-line">
-            <div class="flex flex-col items-center pt-[15vh]">
-                <div>
-                    <h1 class="font-soukou text-[7vw] sm:text-[28px] text-white tracking-wider relative leading-tight">
-                        WE INVITE YOU
-                    </h1>
-                </div>
-                <div>
-                    <h1 class="font-soukou text-[7vw] sm:text-[28px] text-white tracking-wider relative leading-tight">
-                        TO OUR WEDDING
-                    </h1>
-                </div>
+    <!-- Unified Hero Section (Intro + Page 1) -->
+    <!-- Initially h-screen (100vh) for intro effect -->
+    <section id="heroSection"
+        class="relative w-full bg-black overflow-hidden transition-all duration-[1500ms] ease-in-out h-screen z-50">
 
-                <div class="envelope-seal animate-pulse z-20">
-                    <img src="/images2/seal.png" alt="wedding seal" class="w-full h-full object-contain">
-                </div>
-            </div>
-
-            <div class="flex-1"></div>
-
-            <div class="flex flex-col items-center w-full pb-[8vh] z-10">
-                <div class="mb-10 text-center">
-                    <div class="font-gloock text-sm text-white opacity-80 italic mb-2">From.</div>
-                    <div class="font-unipeople font-medium text-white text-xl tracking-[4px]">
-                        정보경<span class="mx-2 opacity-60 text-sm">&</span>조효지
-                    </div>
-                </div>
-
-                <div class="text-white text-center border-t border-white/20 pt-6 w-[80%]">
-                    <div id="ddayCount" class="font-cormorant text-3xl font-medium tracking-wider mb-2">
-                        D-DAY
-                    </div>
-                    <div class="font-unipeople text-sm tracking-[2px] opacity-90">
-                        2026. 04. 19. SUN 13:20
-                    </div>
-                </div>
-            </div>
-
+        <!-- Background Image -->
+        <!-- Using a single image div that stays constant -->
+        <div id="heroImage"
+            class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] ease-out scale-110"
+            style="background-image: url('/intro-gallery/JRJ_0370-.jpg');">
         </div>
-    </div>
 
-    <!-- 메인 콘텐츠 -->
-    <div id="mainContent" class="opacity-0 invisible transition-all duration-1000 ease-in-out">
+        <!-- Dark Overlay -->
+        <div id="heroOverlay" class="absolute inset-0 bg-black/30 transition-opacity duration-1000"></div>
 
-        <!-- Page 1: SAVE THE DATE -->
-        <section class="bg-black flex flex-col items-center">
-            <div class="relative w-full overflow-hidden pt-20"
-                style="height: 80vh; min-height: 600px; max-height: 800px;">
-                <img src="/images2/page1.webp" class="w-full h-full object-cover object-bottom" alt="wedding photo">
+        <!-- INTRO TEXT GROUP (Check this first) -->
+        <div id="introTextGroup"
+            class="absolute inset-0 flex flex-col items-center justify-center text-white z-40 transition-opacity duration-1000">
+            <div class="font-vibes text-4xl mb-4 tracking-widest drop-shadow-lg opacity-0 animate-fade-in-up"
+                style="animation-delay: 0.5s; animation-fill-mode: forwards;">
+                We Are Getting Married
+            </div>
+            <div class="font-soukou text-6xl mb-6 tracking-widest font-bold opacity-0 animate-fade-in-up"
+                style="animation-delay: 1s; animation-fill-mode: forwards;">
+                4 . 19
+            </div>
+            <div class="font-unipeople text-xs tracking-[0.5em] animate-pulse mt-12 opacity-0 animate-fade-in"
+                style="animation-delay: 2s; animation-fill-mode: forwards;">
+                TOUCH SCREEN
+            </div>
+        </div>
 
-                <div class="absolute top-[8%] left-1/2 -translate-x-1/2 flex items-center gap-2">
-                    <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text">SAVE</h2>
-                    <h2 class="font-vibes text-[7vw] sm:text-3xl text-purple-text">The</h2>
-                    <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text">DATE</h2>
-                </div>
+        <!-- MAIN PAGE TEXT GROUP (Hidden initially) -->
+        <div id="mainTextGroup"
+            class="absolute inset-0 z-30 opacity-0 transition-opacity duration-[2000ms] pointer-events-none">
+            <!-- SAVE THE DATE (Top) -->
+            <div class="absolute top-[15%] left-1/2 -translate-x-1/2 flex items-center gap-2 w-full justify-center">
+                <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text drop-shadow-md">SAVE</h2>
+                <h2 class="font-vibes text-[7vw] sm:text-3xl text-purple-text drop-shadow-md">The</h2>
+                <h2 class="font-soukou text-[9vw] sm:text-3xl text-purple-text drop-shadow-md">DATE</h2>
+            </div>
 
-                <div class="absolute top-[45%] left-[10%] -translate-y-1/2 flex flex-col items-center font-unipeople">
-                    <span class="text-[3vw] sm:text-sm text-white opacity-80">신랑</span>
-                    <span class="text-[3vw] sm:text-sm text-white font-bold">정보경</span>
-                </div>
+            <!-- Groom Name (Left) -->
+            <div class="absolute top-[45%] left-[10%] -translate-y-1/2 flex flex-col items-center font-unipeople">
+                <span class="text-[3vw] sm:text-sm text-white opacity-80">신랑</span>
+                <span class="text-[3vw] sm:text-sm text-white font-bold text-shadow">정보경</span>
+            </div>
 
-                <div class="absolute top-[65%] left-[85%] -translate-y-1/2 flex flex-col items-center font-unipeople">
-                    <span class="text-[3vw] sm:text-sm text-white opacity-80">신부</span>
-                    <span class="text-[3vw] sm:text-sm text-white font-bold">조효지</span>
-                </div>
+            <!-- Bride Name (Right) -->
+            <div class="absolute top-[65%] left-[85%] -translate-y-1/2 flex flex-col items-center font-unipeople">
+                <span class="text-[3vw] sm:text-sm text-white opacity-80">신부</span>
+                <span class="text-[3vw] sm:text-sm text-white font-bold text-shadow">조효지</span>
+            </div>
 
-                <div class="absolute top-[85%] left-0 w-full flex flex-col items-center text-[#5d4b5e]">
-                    <div class="w-full px-[10%] text-center">
-                        <span class="font-soukou font-bold block">2026.04.19. SUN 01:20PM</span>
-                        <span class="font-soukou text-[11px] tracking-tighter">WEDDING GROUP WITHUS YEONGDEUNGPO
-                            9F</span>
-                    </div>
+            <!-- Date/Location (Bottom) -->
+            <div class="absolute bottom-[10%] left-0 w-full flex flex-col items-center text-[#dcd0dd]">
+                <div class="w-full px-[10%] text-center">
+                    <span class="font-soukou font-bold block text-lg mb-1">2026.04.19. SUN 01:20PM</span>
+                    <span class="font-soukou text-[11px] tracking-tighter opacity-80">WEDDING GROUP WITHUS YEONGDEUNGPO
+                        9F</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <!-- Content below hero (Initially hidden or just below the fold) -->
+    <!-- We hide it initially to prevent scroll, revealed after intro -->
+    <div id="restOfContent" class="opacity-0 transition-opacity duration-1000">
+
 
         <!-- Page 1-2: 웨딩 정보 -->
         <section class="bg-black py-8 flex flex-col items-center">
@@ -517,28 +521,26 @@
                                 <div class="flex-1">
                                     <div class="font-unipeople text-xs text-gray-500 mb-1">농협</div>
                                     <div class="font-unipeople text-sm font-bold text-gray-800 mb-1">111-111</div>
-                                    <div class="font-unipeople text-xs text-gray-500">어머니 정란아</div>
+                                    <button onclick="copyAccount('111-111', '정란아')"
+                                        class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
+                                        복사
+                                    </button>
                                 </div>
-                                <button onclick="copyAccount('111-111', '정란아')"
-                                    class="px-5 py-2.5 text-xs font-medium bg-purple-primary text-white border border-purple-primary rounded-full hover:bg-purple-light hover:text-black transition-all duration-300 whitespace-nowrap">
-                                    복사
-                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 화환안내 탭 콘텐츠 -->
+                    <div id="content-flower" class="tab-content hidden">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="py-6 px-6 w-full flex flex-col gap-2 text-center font-unipeople text-sm text-gray-700 leading-relaxed">
+                                <div>화환은 정중히 사양합니다.</div>
+                                <div>마음만 감사히 받겠습니다.</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 화환안내 탭 콘텐츠 -->
-                <div id="content-flower" class="tab-content hidden">
-                    <div class="flex flex-col items-center">
-                        <div
-                            class="py-6 px-6 w-full flex flex-col gap-2 text-center font-unipeople text-sm text-gray-700 leading-relaxed">
-                            <div>화환은 정중히 사양합니다.</div>
-                            <div>마음만 감사히 받겠습니다.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- 푸터 -->
@@ -553,28 +555,62 @@
         document.body.style.overflow = 'hidden';
         document.body.style.height = '100vh';
 
-        // 커버 페이지 클릭 시 봉투 열기 애니메이션 + 메인 콘텐츠 표시
-        document.getElementById('coverPage').addEventListener('click', function () {
-            const coverPage = document.getElementById('coverPage');
-            const mainContent = document.getElementById('mainContent');
-            const envelopeSeal = document.querySelector('.envelope-seal');
 
-            // 스티커 사라지는 효과
-            envelopeSeal.classList.add('breaking');
+        // Unified Seamless Intro Logic
 
-            // 전체 봉투가 사라지고 메인 콘텐츠 표시 (1초 후)
+        function runIntro() {
+            // Intro text animations are handled by CSS classes (animate-fade-in-up)
+        }
+
+        window.addEventListener('load', runIntro);
+
+        // Click to Open
+        document.getElementById('heroSection').addEventListener('click', function () {
+            const heroSection = document.getElementById('heroSection');
+            const introTextGroup = document.getElementById('introTextGroup');
+            const mainTextGroup = document.getElementById('mainTextGroup');
+            const restOfContent = document.getElementById('restOfContent');
+            const heroImage = document.getElementById('heroImage');
+            const heroOverlay = document.getElementById('heroOverlay');
+
+            // 1. Fade out Intro Text
+            introTextGroup.style.opacity = '0';
+
+            // 2. Animate Hero Section (Shrink)
+            // Remove h-screen (100vh)
+            heroSection.classList.remove('h-screen');
+            // Add specific height (e.g., 80vh or similar to Page 1)
+            heroSection.style.height = '80vh'; // Explicitly set height for transition
+            heroSection.style.minHeight = '600px';
+
+            // 3. Adjust Image Scale (Shrink effect)
+            heroImage.classList.remove('scale-110');
+            heroImage.classList.add('scale-100');
+
+            // 4. Reveal Main Content
             setTimeout(() => {
-                coverPage.classList.add('opacity-0', 'invisible');
-                mainContent.classList.remove('opacity-0', 'invisible');
-                mainContent.classList.add('opacity-100', 'visible');
+                // Fade in Main Text (Save The Date, etc.)
+                mainTextGroup.style.opacity = '1';
+                mainTextGroup.style.pointerEvents = 'auto'; // Enable interactions if any
 
-                // 스크롤 잠금 해제
+                // Fade in rest of the page
+                if (restOfContent) restOfContent.classList.remove('opacity-0');
+
+                // Unlock scroll
                 document.body.style.overflow = '';
                 document.body.style.height = '';
 
-                // 첫 페이지로 즉시 이동
-                window.scrollTo(0, 0);
-            }, 1000);
+                // Adjust Overlay opacity if needed (make it lighter for main page?)
+                if (heroOverlay) heroOverlay.style.opacity = '0.1'; // Lighter overlay for main view
+
+            }, 500); // Start revealing slightly before height transition ends? Or after?
+            // Transition is 1500ms. 500ms allows overlap.
+
+            // Allow pointer events to pass through after transition for text selection etc?
+            setTimeout(() => {
+                heroSection.onclick = null; // Remove click listener or keep it? 
+                // Better to remove it so user doesn't trigger again, though styles are set.
+            }, 1500);
         });
 
         // 첫 페이지에서 위로 스크롤 방지
@@ -678,7 +714,7 @@
                 item.className = 'aspect-square overflow-hidden cursor-pointer bg-purple-lighter rounded-lg';
 
                 const img = document.createElement('img');
-                img.src = `/gallery/${i}.jpeg`;
+                img.src = `/gallery/${i}.jpg`;
                 img.alt = `Wedding Photo ${i}`;
                 img.loading = 'lazy';
                 img.className = 'w-full h-full object-cover rounded-lg';
@@ -701,7 +737,7 @@
         function preloadHiddenImages() {
             for (let i = thumbnailCount + 1; i <= totalImages; i++) {
                 const img = new Image();
-                img.src = `/gallery/${i}.jpeg`;
+                img.src = `/gallery/${i}.jpg`;
             }
         }
 
@@ -712,7 +748,7 @@
 
         // 이미지 경로 생성 함수
         function getImagePath(index) {
-            return `/gallery/${index}.jpeg`;
+            return `/gallery/${index}.jpg`;
         }
 
         // 갤러리 모달
