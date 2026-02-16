@@ -7,7 +7,7 @@
     <meta name="description" content="정보경 ❤ 조효지의 결혼식에 초대합니다">
     <meta property="og:title" content="정보경 ❤ 조효지 결혼합니다.">
     <meta property="og:description" content="2026년 4월 19일 일요일 오후 1시 20분">
-    <meta property="og:image" content="/images/preview.webp">
+    <meta property="og:image" content="/images/preview.jpeg">
     <meta property="og:type" content="website">
     <title>정보경 ❤ 조효지 결혼합니다.</title>
 
@@ -110,10 +110,51 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Loading Overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #9a819b 0%, #6b5b6c 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #loadingOverlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            color: white;
+            font-family: 'SoukouMincho', serif;
+            font-size: 18px;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 
-<body class="font-sans-kr text-gray-700 overflow-x-hidden">
+<body class="font-sans-kr text-gray-700 overflow-hidden">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
     <!-- Background Music (Web Audio API handled in JS) -->
     <!-- <audio> tag removed to prevent lock screen controls -->
 
@@ -461,6 +502,58 @@
     </div>
 
     <script>
+        // --- Resource Preloading and Loading Overlay ---
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        function preloadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(src);
+                img.onerror = () => {
+                    console.warn(`Failed to load: ${src}`);
+                    resolve(src); // Resolve anyway to not block
+                };
+                img.src = src;
+            });
+        }
+
+        async function preloadResources() {
+            const criticalImages = [
+                '/images/savethedate.webp',
+                '/images/introduce.webp',
+                '/images/letter.webp',
+                '/images/calendar.webp'
+            ];
+
+            // Gallery thumbnails (first 9)
+            const galleryThumbnails = [];
+            for (let i = 1; i <= 9; i++) {
+                galleryThumbnails.push(`/gallery/${i}.jpeg`);
+            }
+
+            const allImages = [...criticalImages, ...galleryThumbnails];
+
+            try {
+                await Promise.all([
+                    ...allImages.map(src => preloadImage(src)),
+                    initAudio() // Preload BGM
+                ]);
+            } catch (e) {
+                console.error('Preload error:', e);
+            }
+
+            // Hide loading overlay
+            loadingOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+                document.body.classList.add('overflow-x-hidden');
+            }, 500);
+        }
+
+        // Start preloading immediately
+        preloadResources();
+
         // 첫 페이지에서 위로 스크롤 방지
         let isAtTop = true;
         window.addEventListener('scroll', function () {
