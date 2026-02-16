@@ -149,6 +149,18 @@
             margin-top: 20px;
             letter-spacing: 2px;
         }
+
+        /* Force light mode colors even in dark mode (for Samsung Internet and other stubborn browsers) */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+            }
+
+            * {
+                color-scheme: light !important;
+            }
+        }
     </style>
 </head>
 
