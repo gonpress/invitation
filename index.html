@@ -579,13 +579,16 @@
             }
         }, { passive: false });
 
-        // --- Strict Zoom Prevention ---
+        // --- Strict Zoom Prevention (Robust Version) ---
+
+        // 1. Prevent Pinch Zoom
         document.addEventListener('touchmove', function (event) {
             if (event.scale !== 1) {
                 event.preventDefault();
             }
         }, { passive: false });
 
+        // 2. Prevent Double Tap Zoom
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
             const now = (new Date()).getTime();
@@ -595,20 +598,17 @@
             lastTouchEnd = now;
         }, false);
 
-        // Block pinch-zoom
+        // 3. Prevent iOS Safari Gesture Zoom (The most critical part for iOS)
         document.addEventListener('gesturestart', function (e) {
             e.preventDefault();
-            document.body.style.zoom = 0.99;
         });
 
         document.addEventListener('gesturechange', function (e) {
             e.preventDefault();
-            document.body.style.zoom = 0.99;
         });
 
         document.addEventListener('gestureend', function (e) {
             e.preventDefault();
-            document.body.style.zoom = 1;
         });
 
         // Block Ctrl+Wheel (Trackpad/Mouse zoom)
