@@ -593,12 +593,12 @@
             }
         }
 
-        function playMusic() {
+        async function playMusic() {
             if (!isAudioInitialized || !audioContext || !audioBuffer) return;
 
-            // If context is suspended, resume it
+            // If context is suspended, resume it and WAIT for it (critical for iOS)
             if (audioContext.state === 'suspended') {
-                audioContext.resume();
+                await audioContext.resume();
             }
 
             // Create valid source node if not exists or if stopped
@@ -663,9 +663,10 @@
         // Initialize loading on load
         window.addEventListener('load', initAudio);
 
-        // Listeners for auto-play
+        // Listeners for auto-play (including scroll for iOS)
         document.addEventListener('click', attemptAutoPlay);
         document.addEventListener('touchstart', attemptAutoPlay);
+        document.addEventListener('scroll', attemptAutoPlay, { once: true });
 
         window.addEventListener('touchstart', function (e) {
             window.startY = e.touches[0].pageY;
