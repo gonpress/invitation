@@ -114,10 +114,8 @@
 </head>
 
 <body class="font-sans-kr text-gray-700 overflow-x-hidden">
-    <!-- Background Music -->
-    <audio id="bgm" loop>
-        <source src="/bgm.mp3" type="audio/mp3">
-    </audio>
+    <!-- Background Music (Web Audio API handled in JS) -->
+    <!-- <audio> tag removed to prevent lock screen controls -->
 
     <!-- Music Control Button -->
     <div id="musicControl" onclick="toggleMusic()">
@@ -475,50 +473,101 @@
             }
         }, { passive: false });
 
-        // --- Background Music Logic ---
-        const bgm = document.getElementById('bgm');
+        // --- Background Music Logic (Web Audio API) ---
+        // Using Web Audio API to prevent OS lock screen media controls
         const musicBtn = document.getElementById('musicControl');
-        let isPlaying = false;
+        let audioContext;
+        let audioBuffer;
+        let sourceNode;
+        let isAudioInitialized = false;
 
-        function toggleMusic() {
-            if (isPlaying) {
-                bgm.pause();
-                musicBtn.classList.remove('playing');
-                // Icon styling for paused state (optional, current is fine)
-                musicBtn.style.opacity = '0.7';
-            } else {
-                bgm.play().then(() => {
-                    musicBtn.classList.add('playing');
-                    musicBtn.style.opacity = '1';
-                }).catch(e => console.log('Playback failed:', e));
+        async function initAudio() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+
+                const response = await fetch('/audio/bgm.mp3');
+                const arrayBuffer = await response.arrayBuffer();
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                isAudioInitialized = true;
+            } catch (e) {
+                console.error('BGM Init Failed:', e);
             }
-            isPlaying = !isPlaying;
         }
 
-        // Attempt Auto-play on first user interaction
-        function autoPlayMusic() {
-            if (!isPlaying) {
-                bgm.play().then(() => {
-                    isPlaying = true;
-                    musicBtn.classList.add('playing');
-                    // Remove listener once played
-                    document.removeEventListener('click', autoPlayMusic);
-                    document.removeEventListener('touchstart', autoPlayMusic);
-                }).catch(e => {
-                    // Auto-play blocked, waiting for interaction
-                    console.log('Auto-play blocked');
+        function playMusic() {
+            if (!isAudioInitialized || !audioContext || !audioBuffer) return;
+
+            // If context is suspended, resume it
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            // Create valid source node if not exists or if stopped
+            if (!sourceNode) {
+                sourceNode = audioContext.createBufferSource();
+                sourceNode.buffer = audioBuffer;
+                sourceNode.loop = true;
+                sourceNode.connect(audioContext.destination);
+                sourceNode.start(0);
+
+                // When audio ends (shouldn't happen with loop, but for safety)
+                sourceNode.onended = () => {
+                    sourceNode = null;
+                    updateBtnState(false);
+                };
+            }
+            updateBtnState(true);
+        }
+
+        function pauseMusic() {
+            if (audioContext && audioContext.state === 'running') {
+                audioContext.suspend().then(() => {
+                    updateBtnState(false);
                 });
             }
         }
 
-        // Try to play on load (often blocked)
-        window.addEventListener('load', () => {
-            autoPlayMusic();
-        });
+        function updateBtnState(playing) {
+            if (playing) {
+                musicBtn.classList.add('playing');
+                musicBtn.style.opacity = '1';
+            } else {
+                musicBtn.classList.remove('playing');
+                musicBtn.style.opacity = '0.7';
+            }
+        }
 
-        // Add listeners for first interaction
-        document.addEventListener('click', autoPlayMusic);
-        document.addEventListener('touchstart', autoPlayMusic);
+        function toggleMusic() {
+            if (!isAudioInitialized) return;
+
+            if (audioContext.state === 'running') {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+        }
+
+        // Auto-play attempt on first interaction
+        async function attemptAutoPlay() {
+            if (!isAudioInitialized) {
+                await initAudio();
+            }
+            playMusic();
+
+            // Remove listeners after first successful interaction
+            if (audioContext && audioContext.state === 'running') {
+                document.removeEventListener('click', attemptAutoPlay);
+                document.removeEventListener('touchstart', attemptAutoPlay);
+            }
+        }
+
+        // Initialize loading on load
+        window.addEventListener('load', initAudio);
+
+        // Listeners for auto-play
+        document.addEventListener('click', attemptAutoPlay);
+        document.addEventListener('touchstart', attemptAutoPlay);
 
         window.addEventListener('touchstart', function (e) {
             window.startY = e.touches[0].pageY;
