@@ -267,13 +267,6 @@
             }
         }
 
-        #modalImage {
-            transition: opacity 0.2s ease;
-        }
-
-        #modalImage.fade-out {
-            opacity: 0;
-        }
     </style>
 </head>
 
@@ -962,21 +955,8 @@
         function updateModalImage() {
             const modalImage = document.getElementById('modalImage');
             const imageCounter = document.getElementById('imageCounter');
-
-            modalImage.classList.add('fade-out');
-
-            setTimeout(() => {
-                modalImage.src = getImagePath(currentImageIndex);
-                imageCounter.textContent = `${currentImageIndex} / ${totalImages}`;
-
-                modalImage.onload = () => {
-                    modalImage.classList.remove('fade-out');
-                };
-                if (modalImage.complete) {
-                    modalImage.classList.remove('fade-out');
-                }
-            }, 150);
-
+            modalImage.src = getImagePath(currentImageIndex);
+            imageCounter.textContent = `${currentImageIndex} / ${totalImages}`;
             preloadAdjacentImages(currentImageIndex);
         }
 
