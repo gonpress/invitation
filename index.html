@@ -115,17 +115,18 @@
             }
         }
 
-        /* Loading Overlay */
+        /* Loading Overlay - AirDrop Style */
         #loadingOverlay {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, #9a819b 0%, #6b5b6c 100%);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.4s ease-out;
         }
 
         #loadingOverlay.fade-out {
@@ -133,21 +134,125 @@
             pointer-events: none;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .airdrop-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            width: 230px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .loading-text {
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .airdrop-sender {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1c1c1e;
+            margin-bottom: 2px;
+            padding: 12px 16px 0;
+        }
+
+        .airdrop-description {
+            font-size: 11px;
+            color: #8e8e93;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+            padding: 0 16px;
+        }
+
+        .airdrop-icon {
+            width: 100%;
+        }
+
+        .airdrop-icon img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .airdrop-buttons {
+            border-top: 0.5px solid rgba(0, 0, 0, 0.15);
+            width: 100%;
+            display: flex;
+        }
+
+        .airdrop-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.15s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .airdrop-btn:first-child {
+            border-right: 0.5px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 0 20px;
+        }
+
+        .airdrop-btn:last-child {
+            border-radius: 0 0 20px 0;
+        }
+
+        .airdrop-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .airdrop-btn-decline {
+            color: #9b7fbd;
+            font-weight: 400;
+        }
+
+        .airdrop-btn-accept {
+            color: #7c4fa0;
+            font-weight: 600;
+        }
+
+        .airdrop-btn:not(:disabled):active {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .airdrop-toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(50, 50, 50, 0.92);
             color: white;
-            font-family: 'SoukouMincho', serif;
-            font-size: 18px;
-            margin-top: 20px;
-            letter-spacing: 2px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+
+        .airdrop-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* Force light mode colors even in dark mode (for Samsung Internet and other stubborn browsers) */
@@ -161,15 +266,37 @@
                 color-scheme: light !important;
             }
         }
+
+        #modalImage {
+            transition: opacity 0.2s ease;
+        }
+
+        #modalImage.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 
 <body class="font-sans-kr text-gray-700 overflow-hidden">
-    <!-- Loading Overlay -->
+    <!-- Loading Overlay - AirDrop Style -->
     <div id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="loading-text">Loading...</div>
+        <div class="airdrop-card">
+            <div class="airdrop-sender">Wedding Day 💌</div>
+            <div class="airdrop-description">
+                <span style="font-size: 11px; color: #aeaeb2;">2026. 4. 19. 일요일 오후 1:20</span>
+            </div>
+            <div class="airdrop-icon">
+                <img src="/images/invitation_thumb.webp" alt="couple photo">
+            </div>
+            <div class="airdrop-buttons">
+                <button class="airdrop-btn airdrop-btn-decline" id="btnDecline" disabled
+                    onclick="handleDecline()">거절</button>
+                <button class="airdrop-btn airdrop-btn-accept" id="btnAccept" disabled
+                    onclick="handleAccept()">수락</button>
+            </div>
+        </div>
     </div>
+    <div class="airdrop-toast" id="airdropToast"></div>
 
     <!-- Background Music (HTML5 Audio) -->
     <audio id="bgm" loop preload="auto">
@@ -495,14 +622,16 @@
     <script>
         // --- Resource Preloading and Loading Overlay ---
         const loadingOverlay = document.getElementById('loadingOverlay');
+        const btnDecline = document.getElementById('btnDecline');
+        const btnAccept = document.getElementById('btnAccept');
 
         function preloadImage(src) {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 const img = new Image();
                 img.onload = () => resolve(src);
                 img.onerror = () => {
                     console.warn(`Failed to load: ${src}`);
-                    resolve(src); // Resolve anyway to not block
+                    resolve(src);
                 };
                 img.src = src;
             });
@@ -516,31 +645,53 @@
                 '/images/calendar.webp'
             ];
 
-            // Gallery thumbnails (first 9)
             const galleryThumbnails = [];
             for (let i = 1; i <= 9; i++) {
-                galleryThumbnails.push(`/gallery/${i}.jpeg`);
+                galleryThumbnails.push(`/gallery/${i}.webp`);
             }
 
             const allImages = [...criticalImages, ...galleryThumbnails];
+            let loaded = 0;
 
-            try {
-                // Preload images only (HTML5 Audio loads automatically)
-                await Promise.all(allImages.map(src => preloadImage(src)));
-            } catch (e) {
-                console.error('Preload error:', e);
-            }
+            await Promise.all(allImages.map(src => preloadImage(src).then(r => {
+                loaded++;
+                return r;
+            })));
 
-            // Hide loading overlay
+            // Enable buttons after loading completes
+            btnDecline.disabled = false;
+            btnAccept.disabled = false;
+        }
+
+        function handleAccept() {
             loadingOverlay.classList.add('fade-out');
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
                 document.body.classList.remove('overflow-hidden');
                 document.body.classList.add('overflow-x-hidden');
-
-                // Attempt to auto-play music after loading completes
                 playMusic();
-            }, 500);
+            }, 400);
+        }
+
+        let declineTimer = null;
+        function handleDecline() {
+            const messages = [
+                '안 오면 삐질 거예요 😤',
+                '밥 진짜 맛있대요 🍱',
+                '신랑 눈물 충전 중... 🥺',
+                '다시 한번 생각해주세요 💭',
+                '신부가 서운해해요 😢',
+                '평생에 한 번인데요 🙏',
+                '빈자리가 눈에 띄어요 👀'
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            const toast = document.getElementById('airdropToast');
+            clearTimeout(declineTimer);
+            toast.classList.remove('show');
+            void toast.offsetWidth; // reflow로 애니메이션 리셋
+            toast.textContent = msg;
+            toast.classList.add('show');
+            declineTimer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         // Start preloading immediately
@@ -770,7 +921,7 @@
 
         // 이미지 경로 생성 함수
         function getImagePath(index) {
-            return `/gallery/${index}.jpeg`;
+            return `/gallery/${index}.webp`;
         }
 
         // 갤러리 모달
@@ -797,12 +948,36 @@
             musicBtn.style.display = 'flex';
         }
 
+        function preloadAdjacentImages(index) {
+            for (let offset = -2; offset <= 2; offset++) {
+                if (offset === 0) continue;
+                let i = index + offset;
+                if (i < 1) i += totalImages;
+                if (i > totalImages) i -= totalImages;
+                const img = new Image();
+                img.src = getImagePath(i);
+            }
+        }
+
         function updateModalImage() {
             const modalImage = document.getElementById('modalImage');
             const imageCounter = document.getElementById('imageCounter');
 
-            modalImage.src = getImagePath(currentImageIndex);
-            imageCounter.textContent = `${currentImageIndex} / ${totalImages}`;
+            modalImage.classList.add('fade-out');
+
+            setTimeout(() => {
+                modalImage.src = getImagePath(currentImageIndex);
+                imageCounter.textContent = `${currentImageIndex} / ${totalImages}`;
+
+                modalImage.onload = () => {
+                    modalImage.classList.remove('fade-out');
+                };
+                if (modalImage.complete) {
+                    modalImage.classList.remove('fade-out');
+                }
+            }, 150);
+
+            preloadAdjacentImages(currentImageIndex);
         }
 
         function showPrevImage() {
