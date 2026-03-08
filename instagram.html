@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="light only">
+    <meta name="description" content="정보경 ❤ 조효지의 결혼식에 초대합니다">
+    <meta property="og:title" content="정보경 ❤ 조효지 결혼합니다.">
+    <meta property="og:description" content="2026년 4월 19일 일요일 오후 1시 20분">
+    <meta property="og:image" content="https://bkhj.m-invitation.site/images/preview.webp">
+    <meta property="og:type" content="website">
+    <title>bokyung & hyoji 💍</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- 네이버 지도 API -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=pkso9goj54"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: #262626;
+            touch-action: pan-x pan-y;
+            -webkit-text-size-adjust: 100%;
+            color-scheme: light only;
+            overflow-x: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html, body { background: #fafafa !important; color: #262626 !important; }
+            * { color-scheme: light !important; }
+        }
+
+        /* ===== LOADING OVERLAY ===== */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.4s ease-out;
+        }
+        #loadingOverlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .airdrop-card {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            width: 230px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .airdrop-sender { font-size: 14px; font-weight: 600; color: #1c1c1e; margin-bottom: 2px; padding: 12px 16px 0; }
+        .airdrop-description { font-size: 11px; color: #8e8e93; text-align: center; line-height: 1.5; margin-bottom: 10px; padding: 0 16px; }
+        .airdrop-icon { width: 100%; }
+        .airdrop-icon img { width: 100%; height: auto; display: block; }
+        .airdrop-buttons { border-top: 0.5px solid rgba(0,0,0,0.15); width: 100%; display: flex; }
+        .airdrop-btn {
+            flex: 1; padding: 10px 8px; border: none; background: transparent;
+            font-size: 14px; cursor: pointer; transition: background 0.15s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .airdrop-btn:first-child { border-right: 0.5px solid rgba(0,0,0,0.15); border-radius: 0 0 0 16px; }
+        .airdrop-btn:last-child { border-radius: 0 0 16px 0; }
+        .airdrop-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .airdrop-btn-decline { color: #9b7fbd; font-weight: 400; }
+        .airdrop-btn-accept { color: #7c4fa0; font-weight: 600; }
+        .airdrop-btn:not(:disabled):active { background: rgba(0,0,0,0.06); }
+        .airdrop-toast {
+            position: fixed; bottom: 80px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(50,50,50,0.92); color: white;
+            padding: 10px 20px; border-radius: 20px; font-size: 14px;
+            opacity: 0; transition: all 0.3s ease; z-index: 10001; white-space: nowrap;
+        }
+        .airdrop-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ===== INSTAGRAM TOP NAV ===== */
+        #igTopNav {
+            position: fixed;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 500px;
+            height: 44px;
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+        }
+        .ig-logo {
+            font-family: 'Great Vibes', cursive;
+            font-size: 22px;
+            color: #262626;
+        }
+        .ig-nav-icons { display: flex; align-items: center; gap: 12px; }
+        .ig-nav-icons button {
+            background: none; border: none; cursor: pointer;
+            padding: 4px; display: flex; align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #musicToggleBtn.playing svg { color: #ed4956; }
+
+        /* ===== MAIN CONTENT (padded for fixed navs) ===== */
+        #mainContent {
+            padding-top: 44px;
+            padding-bottom: 56px;
+            overflow-x: hidden;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            background: #fafafa;
+            border-top: 1px solid #dbdbdb;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #262626;
+            letter-spacing: -0.2px;
+        }
+
+        /* ===== PROFILE HEADER ===== */
+        #profileHeader {
+            background: #fff;
+            padding: 16px;
+        }
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 12px;
+        }
+        .profile-pic-wrap {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 2.5px;
+            flex-shrink: 0;
+        }
+        .profile-pic {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 2.5px solid #fff;
+            object-fit: cover;
+            display: block;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            justify-content: center;
+        }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 16px; font-weight: 600; color: #262626; display: block; }
+        .stat-label { font-size: 12px; color: #262626; }
+        .profile-name { font-size: 14px; font-weight: 600; color: #262626; margin-bottom: 2px; }
+        .profile-bio { font-size: 13px; color: #262626; line-height: 1.5; margin-bottom: 12px; }
+
+        /* ===== FEED POSTS ===== */
+        .feed-post {
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            margin-bottom: 8px;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            gap: 10px;
+        }
+        .post-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%; object-fit: cover;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 1.5px;
+            flex-shrink: 0;
+        }
+        .post-avatar img {
+            width: 100%; height: 100%;
+            border-radius: 50%; border: 1.5px solid #fff;
+            object-fit: cover; display: block;
+        }
+        .post-username { font-size: 13px; font-weight: 600; color: #262626; flex: 1; }
+        .post-more-btn {
+            background: none; border: none; cursor: pointer;
+            padding: 4px; color: #262626;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .post-img-wrap {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .post-img-wrap img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        /* Double-tap heart */
+        .heart-anim {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 80px;
+            pointer-events: none;
+            opacity: 0;
+            transition: none;
+            z-index: 10;
+        }
+        .heart-anim.pop {
+            animation: heartPop 0.7s ease forwards;
+        }
+        @keyframes heartPop {
+            0% { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+            30% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+            60% { transform: translate(-50%,-50%) scale(0.9); opacity: 1; }
+            100% { transform: translate(-50%,-50%) scale(0); opacity: 0; }
+        }
+        .post-actions {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px 4px;
+            gap: 12px;
+        }
+        .post-actions-left { display: flex; gap: 12px; flex: 1; align-items: center; }
+        .action-btn {
+            background: none; border: none; cursor: pointer;
+            padding: 4px; display: flex; align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            color: #262626;
+            transition: transform 0.1s;
+        }
+        .action-btn:active { transform: scale(0.85); }
+        .action-btn.liked svg { fill: #ed4956; color: #ed4956; }
+        .save-btn { margin-left: auto; }
+        .post-likes { font-size: 14px; font-weight: 600; color: #262626; padding: 0 12px 4px; }
+        .post-caption {
+            font-size: 14px; color: #262626;
+            padding: 0 12px 6px;
+            line-height: 1.5;
+        }
+        .post-caption strong { font-weight: 600; }
+        .post-hashtag { color: #00376b; }
+        .post-time { font-size: 10px; color: #8e8e8e; padding: 0 12px 12px; text-transform: uppercase; }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-wrap {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            display: flex;
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .carousel-inner::-webkit-scrollbar { display: none; }
+        .carousel-inner img {
+            flex: 0 0 100%;
+            width: 100%;
+            scroll-snap-align: start;
+            display: block;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            padding: 6px 0 2px;
+        }
+        .carousel-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #dbdbdb;
+            transition: background 0.2s;
+        }
+        .carousel-dot.active { background: #0095f6; }
+
+        /* ===== GALLERY GRID (Post #10) ===== */
+        .gallery-grid-post {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .gallery-grid-post .grid-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .gallery-grid-post .grid-item img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.2s;
+        }
+        .gallery-grid-post .grid-item:active img { opacity: 0.8; }
+
+        /* ===== LOCATION POST ===== */
+        .location-map-wrap {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+        }
+        #postMap { width: 100%; height: 100%; }
+        .location-links {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+        }
+        .location-link-btn {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px;
+            padding: 8px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            font-size: 13px; font-weight: 500;
+            color: #262626;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .location-link-btn img { width: 18px; height: 18px; }
+
+        /* ===== ACCOUNT POST ===== */
+        .account-tabs {
+            display: flex;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 0 12px;
+        }
+        .acc-tab {
+            flex: 1; padding: 10px 0;
+            font-size: 13px; font-weight: 500;
+            color: #8e8e8e;
+            background: none; border: none; cursor: pointer;
+            border-bottom: 2px solid transparent;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .acc-tab.active { color: #262626; border-bottom-color: #262626; }
+        .acc-content { display: none; padding: 0 12px 4px; }
+        .acc-content.active { display: block; }
+        .acc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #efefef;
+        }
+        .acc-row:last-child { border-bottom: none; }
+        .acc-bank { font-size: 11px; color: #8e8e8e; margin-bottom: 2px; }
+        .acc-number { font-size: 14px; font-weight: 600; color: #262626; margin-bottom: 2px; }
+        .acc-name { font-size: 12px; color: #8e8e8e; }
+        .acc-copy-btn {
+            padding: 6px 16px;
+            border: 1px solid #dbdbdb;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            background: none; color: #262626; cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+        }
+        .acc-copy-btn:active { background: #efefef; }
+        .flower-notice {
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #8e8e8e;
+            line-height: 1.8;
+        }
+
+        /* ===== FOOTER ===== */
+        #igFooter {
+            background: #fff;
+            padding: 24px 16px 12px;
+            text-align: center;
+            color: #8e8e8e;
+            font-size: 13px;
+            border-top: 1px solid #dbdbdb;
+        }
+        #igFooter .footer-logo {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            color: #262626;
+            margin-bottom: 4px;
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        #igBottomNav {
+            position: fixed;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 500px;
+            height: 56px;
+            background: #fff;
+            border-top: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: none; border: none; cursor: pointer;
+            padding: 8px 12px;
+            color: #262626;
+            -webkit-tap-highlight-color: transparent;
+            transition: opacity 0.1s;
+        }
+        .nav-btn { color: #8e8e8e; }
+        .nav-btn.active { color: #7c4fa0; }
+        .nav-btn.active svg { fill: none; stroke: #7c4fa0; }
+        .nav-btn:not(.active) svg { fill: none; }
+        .nav-label { font-size: 10px; color: inherit; margin-top: 2px; line-height: 1; font-weight: 400; }
+        .nav-btn.active .nav-label { font-weight: 600; }
+
+        /* ===== GALLERY MODAL ===== */
+        #imageModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 8000;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+        #imageModal.open { display: flex; }
+        #modalClose {
+            position: absolute; top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            color: #fff; font-size: 28px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.15); border-radius: 50%;
+            z-index: 10;
+        }
+        #modalPrev, #modalNext {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px;
+            color: #fff; font-size: 28px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.15); border-radius: 50%;
+            border: none; z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #modalPrev { left: 12px; }
+        #modalNext { right: 12px; }
+        #imageCounter {
+            position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+            color: #fff; font-size: 13px;
+            background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 20px;
+            z-index: 10;
+        }
+        #modalImage { max-width: 92%; max-height: 88%; object-fit: contain; border-radius: 8px; will-change: transform; }
+
+        /* ===== TOAST ===== */
+        .ig-toast {
+            position: fixed; bottom: 70px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(0,0,0,0.8); color: #fff;
+            padding: 10px 20px; border-radius: 6px;
+            font-size: 13px; opacity: 0;
+            transition: all 0.3s; z-index: 9000;
+            white-space: nowrap;
+        }
+        .ig-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ===== D-DAY CALENDAR POST ===== */
+        .dday-overlay {
+            position: relative;
+        }
+        .dday-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+        <div class="airdrop-card">
+            <div class="airdrop-sender">Wedding Day 💌</div>
+            <div class="airdrop-description">
+                <span style="font-size:11px;color:#aeaeb2;">2026. 4. 19. 일요일 오후 1:20</span>
+            </div>
+            <div class="airdrop-icon">
+                <img src="/images/invitation.webp" alt="couple photo">
+            </div>
+            <div class="airdrop-buttons">
+                <button class="airdrop-btn airdrop-btn-decline" id="btnDecline" disabled onclick="handleDecline()">거절</button>
+                <button class="airdrop-btn airdrop-btn-accept" id="btnAccept" disabled onclick="handleAccept()">수락</button>
+            </div>
+        </div>
+    </div>
+    <div class="airdrop-toast" id="airdropToast"></div>
+
+    <!-- BGM -->
+    <audio id="bgm" loop preload="auto">
+        <source src="/audio/bgm.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Instagram Top Nav -->
+    <nav id="igTopNav">
+        <div class="ig-logo">bokyung &amp; hyoji</div>
+        <div class="ig-nav-icons">
+            <button id="musicToggleBtn" onclick="toggleMusic()" title="음악 재생/정지">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"/>
+                    <circle cx="6" cy="18" r="3"/>
+                    <circle cx="18" cy="16" r="3"/>
+                </svg>
+            </button>
+            <button onclick="scrollToSection('profileHeader')" title="알림">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+
+        <!-- Profile Header -->
+        <section id="profileHeader" class="feed-post" style="margin-bottom:0;border-bottom:none;">
+            <div id="profileHeader" style="padding:16px;">
+                <div class="profile-top">
+                    <div class="profile-pic-wrap">
+                        <img class="profile-pic" src="/images/savethedate.webp" alt="profile">
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-num">24</span>
+                            <span class="stat-label">게시물</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">426</span>
+                            <span class="stat-label">팔로워</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">2</span>
+                            <span class="stat-label">팔로잉</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-name">bokyung_x_hyoji 💍</div>
+                <div class="profile-bio">
+                    📅 2026.04.19 일요일 오후 1:20<br>
+                    📍 웨딩그룹위더스 영등포 9F<br>
+                    💕 정보경 ❤️ 조효지
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: 날짜 안내 -->
+        <div class="section-title">📅 날짜 안내</div>
+
+        <!-- Post 1: Save the Date -->
+        <article class="feed-post" id="post1">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap">
+                <img src="/images/savethedate.webp" alt="Save the Date" loading="lazy">
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">248</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> Save the Date 💍 드디어 저희가 결혼합니다!<br>
+                <span class="post-hashtag">#결혼 #웨딩 #savethedate #2026 #정보경 #조효지</span>
+            </div>
+            <div class="post-time">2주 전</div>
+        </article>
+
+        <!-- Section: 신랑신부 소개 -->
+        <div class="section-title">💑 신랑신부 소개</div>
+
+        <!-- Post 2: 신랑신부 소개 -->
+        <article class="feed-post" id="post2">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap">
+                <img src="/images/introduce.webp" alt="신랑신부 소개" loading="lazy">
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">312</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 신랑 정보경 🤵 신부 조효지 👰 두 사람이 하나가 됩니다 ✨<br>
+                <span class="post-hashtag">#신랑신부 #우리의시작 #together</span>
+            </div>
+            <div class="post-time">2주 전</div>
+        </article>
+
+        <!-- Section: 웨딩 편지 -->
+        <div class="section-title">💌 편지</div>
+
+        <!-- Post 3: 웨딩 편지 (Carousel) -->
+        <article class="feed-post" id="post3">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="carousel-wrap">
+                <div class="carousel-inner" id="carousel3" onscroll="updateCarouselDots('carousel3','dots3')">
+                    <img src="/images/letter.webp" alt="편지" loading="lazy">
+                    <img src="/images/letter2.webp" alt="손편지" loading="lazy">
+                </div>
+                <div class="carousel-dots" id="dots3">
+                    <div class="carousel-dot active"></div>
+                    <div class="carousel-dot"></div>
+                </div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">187</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 마음 담아 쓴 편지 💌 소중한 날에 함께해 주세요<br>
+                <span class="post-hashtag">#편지 #웨딩 #마음 #초대</span>
+            </div>
+            <div class="post-time">1주 전</div>
+        </article>
+
+        <!-- Section: 사진 -->
+        <div class="section-title">📸 사진</div>
+
+        <!-- Post 4: Gallery photo 1 (double-tap) -->
+        <article class="feed-post" id="post4">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap" data-like-target="like4">
+                <img src="/gallery/1.webp" alt="Wedding Photo 1" loading="lazy">
+                <div class="heart-anim" id="heartAnim4">❤️</div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" id="like4" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">423</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 우리의 특별한 순간들 📸✨<br>
+                <span class="post-hashtag">#웨딩사진 #웨딩촬영 #couple #love</span>
+            </div>
+            <div class="post-time">1주 전</div>
+        </article>
+
+        <!-- Post 5: Gallery photo 5 (double-tap) -->
+        <article class="feed-post" id="post5">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap" data-like-target="like5">
+                <img src="/gallery/5.webp" alt="Wedding Photo 5" loading="lazy">
+                <div class="heart-anim" id="heartAnim5">❤️</div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" id="like5" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">389</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 둘이 함께라면 어디든 🌸<br>
+                <span class="post-hashtag">#웨딩 #커플 #행복 #설렘</span>
+            </div>
+            <div class="post-time">6일 전</div>
+        </article>
+
+        <!-- Post 6: Gallery photo 10 (double-tap) -->
+        <article class="feed-post" id="post6">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap" data-like-target="like6">
+                <img src="/gallery/10.webp" alt="Wedding Photo 10" loading="lazy">
+                <div class="heart-anim" id="heartAnim6">❤️</div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" id="like6" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">501</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 영원히 함께할게요 💕<br>
+                <span class="post-hashtag">#웨딩포토 #함께 #영원히 #wedding</span>
+            </div>
+            <div class="post-time">5일 전</div>
+        </article>
+
+        <!-- Section: D-Day -->
+        <div class="section-title">📅 D-Day 카운트다운</div>
+
+        <!-- Post 7: D-Day Calendar -->
+        <article class="feed-post" id="post7">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="post-img-wrap dday-overlay">
+                <img src="/images/calendar.webp" alt="결혼식 날짜" loading="lazy">
+                <div class="dday-badge" id="ddayBadge">D-?</div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">274</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 2026년 4월 19일 일요일 오후 1시 20분 📅<br>
+                <span class="post-hashtag">#결혼식날짜 #디데이 #카운트다운 #wedding2026</span>
+            </div>
+            <div class="post-time">4일 전</div>
+        </article>
+
+        <!-- Section: 오시는 길 -->
+        <div class="section-title">📍 오시는 길</div>
+
+        <!-- Post 8: 오시는 길 -->
+        <article class="feed-post" id="post8">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="location-map-wrap">
+                <div id="postMap"></div>
+            </div>
+            <div class="location-links">
+                <a href="https://place.map.kakao.com/24250591" target="_blank" class="location-link-btn">
+                    <img src="/images/kakao-ico.png" alt="kakao">카카오맵
+                </a>
+                <a href="https://naver.me/5chuCtRo" target="_blank" class="location-link-btn">
+                    <img src="/images/naver-ico.png" alt="naver">네이버지도
+                </a>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">156</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 📍 웨딩그룹위더스 영등포 9층 아모르홀<br>서울특별시 영등포구 영중로 55<br>
+                🚊 5호선 영등포시장역 4번 출구 도보 1분<br>
+                <span class="post-hashtag">#오시는길 #웨딩홀 #영등포 #위더스</span>
+            </div>
+            <div class="post-time">3일 전</div>
+        </article>
+
+        <!-- Section: 축의금 -->
+        <div class="section-title">💰 축의금 안내</div>
+
+        <!-- Post 9: 축의금 -->
+        <article class="feed-post" id="post9">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div style="background:#fff;">
+                <div class="account-tabs">
+                    <button class="acc-tab active" onclick="switchAccTab('groom', this)">신랑측</button>
+                    <button class="acc-tab" onclick="switchAccTab('bride', this)">신부측</button>
+                    <button class="acc-tab" onclick="switchAccTab('flower', this)">화환안내</button>
+                </div>
+                <!-- 신랑측 -->
+                <div class="acc-content active" id="acc-groom">
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">하나은행</div>
+                            <div class="acc-number">620-191216-127</div>
+                            <div class="acc-name">신랑 정보경</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('620-191216-127','정보경')">복사</button>
+                    </div>
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">농협</div>
+                            <div class="acc-number">352-1802-4403-63</div>
+                            <div class="acc-name">아버지 정한국</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('352-1802-4403-63','정한국')">복사</button>
+                    </div>
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">대구은행</div>
+                            <div class="acc-number">240-12-00-3084</div>
+                            <div class="acc-name">어머니 최맹자</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('240-12-00-3084','최맹자')">복사</button>
+                    </div>
+                </div>
+                <!-- 신부측 -->
+                <div class="acc-content" id="acc-bride">
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">토스뱅크</div>
+                            <div class="acc-number">1000-0809-4039</div>
+                            <div class="acc-name">신부 조효지</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('1000-0809-4039','조효지')">복사</button>
+                    </div>
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">신한은행</div>
+                            <div class="acc-number">110-504-229594</div>
+                            <div class="acc-name">아버지 조대현</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('110-504-229594','조대현')">복사</button>
+                    </div>
+                    <div class="acc-row">
+                        <div>
+                            <div class="acc-bank">농협</div>
+                            <div class="acc-number">170820-52-079945</div>
+                            <div class="acc-name">어머니 정란아</div>
+                        </div>
+                        <button class="acc-copy-btn" onclick="copyAccount('170820-52-079945','정란아')">복사</button>
+                    </div>
+                </div>
+                <!-- 화환안내 -->
+                <div class="acc-content" id="acc-flower">
+                    <div class="flower-notice">
+                        화환은 정중히 사양합니다.<br>마음만 감사히 받겠습니다. 🌸
+                    </div>
+                </div>
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">203</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 마음만으로도 충분합니다 💕<br>
+                <span class="post-hashtag">#축의금 #계좌번호 #감사합니다</span>
+            </div>
+            <div class="post-time">2일 전</div>
+        </article>
+
+        <!-- Section: 갤러리 -->
+        <div class="section-title">🖼 전체 갤러리</div>
+
+        <!-- Post 10: 갤러리 그리드 -->
+        <article class="feed-post" id="post10">
+            <div class="post-header">
+                <div class="post-avatar"><img src="/images/savethedate.webp" alt="profile"></div>
+                <span class="post-username">bokyung_x_hyoji</span>
+                <button class="post-more-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+            </div>
+            <div class="gallery-grid-post" id="galleryGridPost">
+                <!-- Generated by JS -->
+            </div>
+            <div class="post-actions">
+                <div class="post-actions-left">
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <button class="action-btn save-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </button>
+            </div>
+            <div class="post-likes">좋아요 <span class="like-count">617</span>개</div>
+            <div class="post-caption">
+                <strong>bokyung_x_hyoji</strong> 웨딩 갤러리 📸 소중한 추억들을 공유합니다 🌸<br>
+                <span class="post-hashtag">#갤러리 #웨딩포토 #추억 #결혼식</span>
+            </div>
+            <div class="post-time">오늘</div>
+        </article>
+
+        <!-- Footer -->
+        <footer id="igFooter">
+            <div class="footer-logo">Thank you</div>
+            <div>정보경 &amp; 조효지 💕</div>
+        </footer>
+
+    </div><!-- /mainContent -->
+
+    <!-- Gallery Modal -->
+    <div id="imageModal">
+        <div id="modalClose">×</div>
+        <button id="modalPrev">‹</button>
+        <button id="modalNext">›</button>
+        <div id="imageCounter">1 / 24</div>
+        <img id="modalImage" src="" alt="Gallery Image">
+    </div>
+
+    <!-- Toast -->
+    <div class="ig-toast" id="igToast"></div>
+
+    <!-- Bottom Nav -->
+    <nav id="igBottomNav">
+        <button class="nav-btn active" id="nav-home" onclick="navClick('home')">
+            <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span class="nav-label">홈</span>
+        </button>
+        <button class="nav-btn" id="nav-search" onclick="navClick('search')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+            </svg>
+            <span class="nav-label">사진</span>
+        </button>
+        <button class="nav-btn" id="nav-reels" onclick="navClick('reels')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span class="nav-label">날짜</span>
+        </button>
+        <button class="nav-btn" id="nav-profile" onclick="navClick('profile')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="10" r="3"/>
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            </svg>
+            <span class="nav-label">오시는길</span>
+        </button>
+        <button class="nav-btn" id="nav-shop" onclick="navClick('shop')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2"/>
+                <polyline points="16 3 12 7 8 3"/>
+                <line x1="12" y1="12" x2="12" y2="17"/>
+                <line x1="9" y1="14.5" x2="15" y2="14.5"/>
+            </svg>
+            <span class="nav-label">축의금</span>
+        </button>
+    </nav>
+
+    <script>
+    // ===== LOADING OVERLAY =====
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const btnDecline = document.getElementById('btnDecline');
+    const btnAccept = document.getElementById('btnAccept');
+
+    function preloadImage(src) {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.onload = img.onerror = () => resolve(src);
+            img.src = src;
+        });
+    }
+
+    async function preloadResources() {
+        const imgs = [
+            '/images/savethedate.webp', '/images/introduce.webp',
+            '/images/letter.webp', '/images/calendar.webp'
+        ];
+        for (let i = 1; i <= 9; i++) imgs.push(`/gallery/${i}.webp`);
+        await Promise.all(imgs.map(preloadImage));
+        btnDecline.disabled = false;
+        btnAccept.disabled = false;
+    }
+
+    function handleAccept() {
+        loadingOverlay.classList.add('fade-out');
+        setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+            playMusic();
+        }, 400);
+    }
+
+    let declineTimer = null;
+    function handleDecline() {
+        const msgs = ['안 오면 삐질 거예요 😤','밥 진짜 맛있대요 🍱','신랑 눈물 충전 중... 🥺','다시 한번 생각해주세요 💭','신부가 서운해해요 😢','평생에 한 번인데요 🙏'];
+        const toast = document.getElementById('airdropToast');
+        clearTimeout(declineTimer);
+        toast.classList.remove('show');
+        void toast.offsetWidth;
+        toast.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+        toast.classList.add('show');
+        declineTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    preloadResources();
+
+    // ===== BGM =====
+    const bgm = document.getElementById('bgm');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    let isPlaying = false;
+
+    function playMusic() {
+        if (!bgm) return;
+        bgm.play().then(() => { isPlaying = true; updateMusicBtn(true); }).catch(() => {});
+    }
+    function pauseMusic() {
+        bgm.pause(); isPlaying = false; updateMusicBtn(false);
+    }
+    function toggleMusic() {
+        isPlaying ? pauseMusic() : playMusic();
+    }
+    function updateMusicBtn(playing) {
+        const svg = musicBtn.querySelector('svg');
+        if (playing) { svg.style.color = '#ed4956'; svg.style.fill = 'none'; }
+        else { svg.style.color = '#262626'; svg.style.fill = 'none'; }
+    }
+
+    function attemptAutoPlay() {
+        if (!isPlaying) { playMusic(); document.removeEventListener('click', attemptAutoPlay); document.removeEventListener('touchstart', attemptAutoPlay); }
+    }
+    document.addEventListener('click', attemptAutoPlay);
+    document.addEventListener('touchstart', attemptAutoPlay);
+
+    // ===== ZOOM PREVENTION =====
+    document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', e => {
+        const now = Date.now();
+        // Allow double-tap on post images for like
+        if (e.target.closest('.post-img-wrap')) return;
+        if (now - lastTouchEnd <= 300) e.preventDefault();
+        lastTouchEnd = now;
+    }, false);
+    document.addEventListener('gesturestart', e => e.preventDefault());
+    document.addEventListener('gesturechange', e => e.preventDefault());
+    document.addEventListener('gestureend', e => e.preventDefault());
+    window.addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+
+    // ===== LIKE TOGGLE =====
+    function toggleLike(btn) {
+        btn.classList.toggle('liked');
+        const article = btn.closest('article');
+        if (!article) return;
+        const countEl = article.querySelector('.like-count');
+        if (!countEl) return;
+        let count = parseInt(countEl.textContent.replace(',',''));
+        countEl.textContent = btn.classList.contains('liked') ? count + 1 : count - 1;
+    }
+
+    // ===== DOUBLE TAP LIKE =====
+    document.querySelectorAll('.post-img-wrap[data-like-target]').forEach(wrap => {
+        let lastTap = 0;
+        wrap.addEventListener('touchend', e => {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                e.preventDefault();
+                const heartId = 'heartAnim' + wrap.dataset.likeTarget.replace('like','');
+                const heart = document.getElementById(heartId);
+                if (heart) {
+                    heart.classList.remove('pop');
+                    void heart.offsetWidth;
+                    heart.classList.add('pop');
+                }
+                const likeBtn = document.getElementById(wrap.dataset.likeTarget);
+                if (likeBtn && !likeBtn.classList.contains('liked')) {
+                    toggleLike(likeBtn);
+                }
+            }
+            lastTap = now;
+        });
+        // Desktop double-click
+        wrap.addEventListener('dblclick', () => {
+            const heartId = 'heartAnim' + wrap.dataset.likeTarget.replace('like','');
+            const heart = document.getElementById(heartId);
+            if (heart) { heart.classList.remove('pop'); void heart.offsetWidth; heart.classList.add('pop'); }
+            const likeBtn = document.getElementById(wrap.dataset.likeTarget);
+            if (likeBtn && !likeBtn.classList.contains('liked')) toggleLike(likeBtn);
+        });
+    });
+
+    // ===== CAROUSEL DOTS =====
+    function updateCarouselDots(carouselId, dotsId) {
+        const carousel = document.getElementById(carouselId);
+        const dots = document.getElementById(dotsId);
+        if (!carousel || !dots) return;
+        const idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+        dots.querySelectorAll('.carousel-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === idx);
+        });
+    }
+
+    // ===== GALLERY GRID (Post 10) =====
+    const galleryGridPost = document.getElementById('galleryGridPost');
+    for (let i = 1; i <= 9; i++) {
+        const item = document.createElement('div');
+        item.className = 'grid-item';
+        const img = document.createElement('img');
+        img.src = `/gallery/${i}.webp`;
+        img.alt = `Wedding Photo ${i}`;
+        img.loading = 'lazy';
+        item.appendChild(img);
+        item.addEventListener('click', () => openModal(i));
+        galleryGridPost.appendChild(item);
+    }
+
+    // ===== GALLERY MODAL =====
+    const totalImages = 24;
+    let currentImageIndex = 1;
+
+    function openModal(idx) {
+        currentImageIndex = idx;
+        updateModalImage();
+        document.getElementById('imageModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        document.getElementById('imageModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function updateModalImage() {
+        document.getElementById('modalImage').src = `/gallery/${currentImageIndex}.webp`;
+        document.getElementById('imageCounter').textContent = `${currentImageIndex} / ${totalImages}`;
+        // preload adjacent
+        [-1,1,2,-2].forEach(o => {
+            let i = currentImageIndex + o;
+            if (i < 1) i += totalImages;
+            if (i > totalImages) i -= totalImages;
+            new Image().src = `/gallery/${i}.webp`;
+        });
+    }
+    function showPrevImage() { currentImageIndex = currentImageIndex === 1 ? totalImages : currentImageIndex - 1; updateModalImage(); }
+    function showNextImage() { currentImageIndex = currentImageIndex === totalImages ? 1 : currentImageIndex + 1; updateModalImage(); }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalPrev').addEventListener('click', e => { e.stopPropagation(); showPrevImage(); });
+    document.getElementById('modalNext').addEventListener('click', e => { e.stopPropagation(); showNextImage(); });
+    document.getElementById('modalPrev').addEventListener('touchend', e => { e.preventDefault(); e.stopPropagation(); showPrevImage(); });
+    document.getElementById('modalNext').addEventListener('touchend', e => { e.preventDefault(); e.stopPropagation(); showNextImage(); });
+    document.getElementById('imageModal').addEventListener('click', e => { if (e.target.id === 'imageModal') closeModal(); });
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('imageModal').classList.contains('open')) return;
+        if (e.key === 'Escape') closeModal();
+        else if (e.key === 'ArrowLeft') showPrevImage();
+        else if (e.key === 'ArrowRight') showNextImage();
+    });
+
+    // Modal swipe
+    let modalTouchStartX = 0;
+    document.getElementById('imageModal').addEventListener('touchstart', e => { modalTouchStartX = e.changedTouches[0].screenX; });
+    document.getElementById('imageModal').addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].screenX - modalTouchStartX;
+        if (dx < -50) showNextImage();
+        else if (dx > 50) showPrevImage();
+    });
+
+    // ===== ACCOUNT TABS =====
+    function switchAccTab(name, btn) {
+        document.querySelectorAll('.acc-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.acc-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('acc-' + name).classList.add('active');
+    }
+
+    // ===== COPY ACCOUNT =====
+    function copyAccount(num, name) {
+        const fallback = () => {
+            const ta = document.createElement('textarea');
+            ta.value = num; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); showToast(`${name} 계좌가 복사되었습니다`); }
+            catch { showToast(`계좌: ${num}`); }
+            document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(num).then(() => showToast(`${name} 계좌가 복사되었습니다`)).catch(fallback);
+        } else fallback();
+    }
+
+    // ===== TOAST =====
+    let toastTimer;
+    function showToast(msg) {
+        const t = document.getElementById('igToast');
+        clearTimeout(toastTimer);
+        t.textContent = msg;
+        t.classList.add('show');
+        toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ===== D-DAY =====
+    function updateDDay() {
+        const wedding = new Date('2026-04-19T13:20:00');
+        const now = new Date();
+        const diff = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
+        const badge = document.getElementById('ddayBadge');
+        if (!badge) return;
+        if (diff > 0) badge.textContent = `D-${diff}`;
+        else if (diff === 0) badge.textContent = 'D-Day!';
+        else badge.textContent = `D+${Math.abs(diff)}`;
+    }
+    updateDDay();
+
+    // ===== NAVER MAP =====
+    function initMap() {
+        const loc = new naver.maps.LatLng(37.521244, 126.904598);
+        const map = new naver.maps.Map('postMap', {
+            center: loc, zoom: 14,
+            zoomControl: true,
+            zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT }
+        });
+        const marker = new naver.maps.Marker({ position: loc, map });
+        const infoWindow = new naver.maps.InfoWindow({
+            content: '<div style="padding:8px;font-size:13px;text-align:center;"><strong>웨딩그룹위더스 영등포</strong><br>9층 아모르홀</div>'
+        });
+        naver.maps.Event.addListener(marker, 'click', () => {
+            infoWindow.getMap() ? infoWindow.close() : infoWindow.open(map, marker);
+        });
+        infoWindow.open(map, marker);
+    }
+    if (typeof naver !== 'undefined' && naver.maps) initMap();
+
+    // ===== BOTTOM NAV =====
+    const navSections = {
+        home: 'profileHeader',
+        search: 'post10',
+        reels: 'post7',
+        shop: 'post9',
+        profile: 'post8'
+    };
+
+    function navClick(name) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('nav-' + name).classList.add('active');
+        const targetId = navSections[name];
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function scrollToSection(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // IntersectionObserver for active nav
+    const postSectionMap = [
+        { id: 'profileHeader', nav: 'home' },
+        { id: 'post10', nav: 'search' },
+        { id: 'post7', nav: 'reels' },
+        { id: 'post9', nav: 'shop' },
+        { id: 'post8', nav: 'profile' },
+    ];
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const found = postSectionMap.find(m => m.id === entry.target.id);
+                if (found) {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    const btn = document.getElementById('nav-' + found.nav);
+                    if (btn) btn.classList.add('active');
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    postSectionMap.forEach(m => {
+        const el = document.getElementById(m.id);
+        if (el) observer.observe(el);
+    });
+
+    </script>
+</body>
+</html>
