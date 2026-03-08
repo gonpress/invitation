@@ -267,6 +267,12 @@
             }
         }
 
+        #imageModal {
+            touch-action: manipulation;
+        }
+        #modalImage {
+            will-change: transform;
+        }
     </style>
 </head>
 
@@ -977,6 +983,16 @@
             showPrevImage();
         });
         document.getElementById('modalNext').addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNextImage();
+        });
+        document.getElementById('modalPrev').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showPrevImage();
+        });
+        document.getElementById('modalNext').addEventListener('touchend', (e) => {
+            e.preventDefault();
             e.stopPropagation();
             showNextImage();
         });
